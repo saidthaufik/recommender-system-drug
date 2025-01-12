@@ -286,7 +286,315 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
   0
   ```
   Berdasarkan _output_ diatas bahwa tidak terdapat data yang duplikat terhadap dataset `df`
+
+## Data Visualization
+**Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan kita untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
+
+- Melihat Distribusi 30 `urlDrugName` Teratas
+  <div align="center">
+  <img src="https://github.com/user-attachments/assets/e612913b-ed71-4961-82fc-5b8c75bf5ba1" alt="Distribusi 30 Obat Teratas" width="500"/>
+  <br>
+  <b>Gambar 1. Distribusi 30 Obat Teratas</b>
+  </div>
+
+  Berdasarkan grafik diatas bahwa persebaran data pada `urlDrugName` cukup merata sehingga tetap dipertahankan untuk analisis berikutnya
+
+- Melihat Distribusi `rating`
+  <div align="center">
+  <img src="https://github.com/user-attachments/assets/ef8b272d-bc5b-4c74-be4e-5d1d881d0cbd" alt="Distribusi Rating" width="500"/>
+  <br>
+  <b>Gambar 2. Distribusi Rating</b>
+  </div>
+
+  Berdasarkan grafik diatas bahwa distribusi `rating` yang **terbesar adalah 10 dengan data 968**, sedangkan `rating` yang **terkecil adalah 2 dengan data 136**
+
+- Melihat Distribusi `effectiveness`
+  <div align="center">
+  <img src="https://github.com/user-attachments/assets/16b0d3f2-43ec-4be6-89b0-98ec446f7399" alt="Distribusi Efektifitas Obat" width="500"/>
+  <br>
+  <b>Gambar 3. Distribusi Efektifitas Obat</b>
+  </div>
+
+  Berdasarkan grafik diatas bahwa distribusi `effectiveness` yang **terbesar adalah Highly Effective dengan data 1741**, sedangkan `effectiveness` yang **terkecil adalah Marginally Effective dengan 263 data**
+
+- Melihat Distribusi `sideEffects`
+  <div align="center">
+  <img src="https://github.com/user-attachments/assets/61b1711c-1042-4655-8cf8-c273411790d7" alt="Distribusi Efek Samping Obat" width="500"/>
+  <br>
+  <b>Gambar 4. Distribusi Efek Samping Obat</b>
+  </div>
+
+  Berdasarkan grafik diatas bahwa distribusi `sideEffects` yang **terbesar adalah Mid Side Effects dengan data 1349**, sedangkan `sideEffects` yang **terkecil adalah Extremely Severe Side Effects dengan 255 data**
+
+- Melihat Distribusi `condition`
+  <div align="center">
+  <img src="https://github.com/user-attachments/assets/68e34c37-e706-4dfb-b7ef-04f9aaa5ee41" alt="Distribusi Kondisi Medis" width="500"/>
+  <br>
+  <b>Gambar 5. Distribusi Kondisi Medis</b>
+  </div>
+
+  Berikut adalah grafik 10 teratas distribusi `condition` terlihat bahwa **despression** dan **acne** menjadi yang paling mencolok dari distribusi lainnya
+
+  **Rekomendasi:**
+  Melakukan _filter_ kondisi medis kurang dari 10, alasannya akan dijelaskan pada proses **Data Preparation**
+
+# Data Preparation
+
+## Handling Data Duplikat
+Pada proses ini, langkah yang dilakukan adalah memeriksa dan menghapus data duplikat dari dataset untuk memastikan kualitas data yang baik sebelum masuk ke tahap pemodelan. Proses ini penting untuk menghindari data yang terulang yang dapat mempengaruhi hasil analisis dan performa model rekomendasi.
+
+**Alasan:**  
+Data duplikat dapat menyebabkan bias dalam analisis dan model karena beberapa data akan memiliki bobot yang lebih besar dari yang seharusnya. Selain itu, keberadaan data yang berulang dapat membuat model memberikan rekomendasi yang tidak akurat atau menyesatkan. Menghilangkan duplikat membantu menjaga keakuratan hasil rekomendasi dengan memastikan setiap data unik dan representatif.
+
+```python
+print("Jumlah data duplikat", df.duplicated().sum())
+```
+Dengan _output_
+```
+Jumlah data duplikat 0
+```
+Sehingga pada operasi ini tidak ada penghapusan data duplikat, karena tidak terdapat data yang duplikat
+
+## Missing Value/ Nilai NaN
+Pada proses ini, langkah yang dilakukan adalah memeriksa keberadaan **missing value** atau **nilai NaN** pada dataset dan mengatasinya agar tidak memengaruhi hasil analisis dan pemodelan. Data yang hilang sering kali muncul akibat kesalahan pencatatan atau ketidaklengkapan informasi yang diberikan oleh pengguna.
+
+**Alasan:**  
+**Missing value** dapat menyebabkan masalah dalam proses analisis dan pemodelan tidak dapat menangani data yang kosong. Kehadiran nilai yang hilang juga dapat menurunkan kualitas model. Oleh karena itu, langkah penanganan yang tepat seperti **menghapus data yang hilang** untuk menjaga integritas dataset.
+
+```python
+df.isnull().sum()
+```
+Dengan _output_
+```
+Unnamed: 0           0
+urlDrugName          0
+rating               0
+effectiveness        0
+sideEffects          0
+condition            1
+benefitsReview       0
+sideEffectsReview    2
+commentsReview       8
+dtype: int64
+```
+Sehingga dilakukan penghapusan nilai `Nan` dengan fungsi `dropna()` pada kolom yang memilki nilai kosong
+```python
+df = df.dropna(subset=['condition', 'sideEffectsReview', 'commentsReview'])
+```
+Sehingga dilakukan pengecekan kembali 
+```
+Unnamed: 0           0
+urlDrugName          0
+rating               0
+effectiveness        0
+sideEffects          0
+condition            0
+benefitsReview       0
+sideEffectsReview    0
+commentsReview       0
+dtype: int64
+```
+Berdasarkan _output_ diatas, tidak terdapat data pada fitur/kolom `condition` yang terdapat nilai NaN, sehingga tidak ada tindakan penghapusan data
+
+## Filter Frekuensi Data
+Pada proses ini, dilakukan filter terhadap kolom `condition` untuk memastikan hanya data dengan frekuensi kemunculan yang cukup tinggi yang digunakan dalam analisis. Filter ini dilakukan dengan menetapkan ambang batas frekuensi lebih besar dari 10 (>10). 
+
+**Alasan**: Kondisi dengan frekuensi kemunculan kurang dari atau sama dengan 30 dianggap terlalu jarang muncul dan cenderung tidak memberikan kontribusi yang signifikan terhadap hasil analisis. Selain itu, data dengan frekuensi rendah sering kali merupakan _outlier_ atau tidak relevan dalam konteks permasalahan yang sedang dianalisis. 
+
+```python
+condition_counts = df['condition'].value_counts()
+filtered_conditions = condition_counts[condition_counts > 30]
+df_filtered = df[df['condition'].isin(filtered_conditions.index)]
+```
+Berhasil menerapkan filter terhadap kolom `condition`  lebih besar dari 30
+```python
+print(f"Jumlah kondisi unik setelah filter (>10): {len(filtered_conditions)}")
+print(f"Jumlah total baris setelah filter: {len(df_filtered)}")
+```
+Dengan _output_
+```
+Jumlah kondisi unik setelah filter (>30): 16
+Jumlah total baris setelah filter: 1198
+```
+Berdasarkan output diatas **data yang digunakan adalah sebanyak 1.198 data** dengan **kondisi unik sebanyak 16 pada kolom `condition`**
+
+## Filter Fitur Penting
+Pada proses ini, dataset difokuskan hanya pada fitur-fitur yang relevan untuk membangun sistem rekomendasi obat.
+
+**Alasan pemilihan fitur**:
+- Untuk kolom `benefitsReview`,`sideEffectsReview`, dan`commentsReview` tidak akan digunakan pada proyek ini, karena proyek ini **terbatas** dalam pengelolaan kolom dengan kajian atau penanganan data **Natural Language Processing (NLP)**
+- Karena proyek ini hanya menerapkan Content-Based Filtering saja dengan pertimbangan `condition` sehingga kolom `rating`, `effectiveness` dan `sideEffects` tidak digunakan
+
+```python
+df = df_filtered[['urlDrugName','condition']]
+```
+Dengan _output_
+```
+| urlDrugName | condition      |
+|-------------|----------------|
+| prilosec    | acid reflux    |
+| propecia    | hair loss      |
+| vyvanse     | add            |
+| elavil      | depression     |
+| claritin    | allergies      |
+| ...         | ...            |
+| ambien      | insomnia       |
+| nexium      | acid reflux    |
+| retin-a     | acne           |
+| vyvanse     | adhd           |
+| proair-hfa  | asthma         |
+
+1198 rows × 2 columns
+```
+
+Sekarang variabel `df` hanya berisikan fitur :
+- `urlDrugName`
+- `condition`
+
+Dengan jumlah data **1198 baris dengan 2 kolom**
+
+# Modelling dan Result
+## Content-Based Filtering
+**Content-Based Filtering** adalah pendekatan dalam sistem rekomendasi yang menggunakan atribut-atribut atau fitur-fitur dari item untuk menentukan kesamaan antara item yang ada. Pendekatan ini berfokus pada karakteristik item yang telah dinilai pengguna untuk merekomendasikan item serupa.
+
+**Kelebihan:**
+- Tidak memerlukan data dari pengguna lain, sehingga cocok untuk personalisasi.
+- Efektif dalam menangani cold start untuk pengguna baru.
+- Rekomendasi dapat dijelaskan dengan mudah karena berbasis pada fitur yang relevan.
+
+***Kekurangan:***
+- Cenderung menghasilkan rekomendasi yang terlalu spesifik dan tidak bervariasi (_overspecialization_).
+- Bergantung pada ketersediaan dan kualitas fitur/atribut item.
+- Tidak dapat merekomendasikan item yang berbeda dari sejarah preferensi pengguna (tidak ada eksplorasi).
+
+Pendekatan ini menggunakan atribut-atribut atau fitur-fitur item untuk menentukan kesamaan antara item yang ada. Dalam konteks proyek ini, content-based filtering akan memberikan rekomendasi obat (_drug_) berdasarkan **condition** dari dataset yang tersedia.
+
+### Modelling
+
+- Penggabungan Fitur dan Membuat matriks TF-IDF
+  ```python
+  tf_id = TfidfVectorizer(stop_words='english')
+  tf_id.fit(df['condition'])
+  tf_id.get_feature_names_out()
+  ```
+  Dengan _output_
+  ```
+  array(['acid', 'acne', 'add', 'adhd', 'allergies', 'anxiety', 'asthma',
+       'birth', 'blood', 'cholesterol', 'control', 'depression', 'hair',
+       'high', 'hypothyroidism', 'insomnia', 'loss', 'migraine',
+       'migraines', 'pressure', 'reflux'], dtype=object)
+  ```
+  Berdasarkan _output_ diatas menghasilkan _array_ yang berisi nilai-nilai yang ada pada kolom `condition`
+
+- Melihat ukuran matrix tfidf
+  ```python
+  tfidf_matrix = tf_id.fit_transform(df['condition'])
+  tfidf_matrix.shape
+  ```
+  Dengan _output_
+  ```
+  (1198, 21)
+  ```
+  Berdasarkan _output_ diatas menampilkan **ukuran data 1198 baris x 21 kolom**, sehingga akan masuk tahap pembuatan matrix agar bisa dianalisa lebih lanjut
+
+- Mengubah vektor tf-idf yang berbentuk matriks menggunakan fungsi `todense()`
+  ```python
+  tfidf_matrix.todense()
+  ```
+  Dengan _output_
+  ```
+  matrix([[0.70710678, 0.        , 0.        , ..., 0.        , 0.        ,
+         0.70710678],
+        [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+         0.        ],
+        [0.        , 0.        , 1.        , ..., 0.        , 0.        ,
+         0.        ],
+        ...,
+        [0.        , 1.        , 0.        , ..., 0.        , 0.        ,
+         0.        ],
+        [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+         0.        ],
+        [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+         0.        ]])
+  ```
+  Berdasarkan _output_ diatas berhasil menerapkan fungsi `todense()` untuk membentuk matrix
+
+- Membuat DataFrame untuk melihat TF-IDF matrix
+  ```python
+  tfidf_df = pd.DataFrame(
+    tfidf_matrix.todense(),                    
+    columns=tf_id.get_feature_names_out(),  
+    index=df['urlDrugName'])
+  ```
+  Berhasil membuat Dataframe `tfidf_df`
+
+- Proses perhitungan `cosine_similarity()`
+  ```python
+  cosine_sim = cosine_similarity(tfidf_matrix)
+  cosine_sim
+  ```
+  Dengan _output_
+  ```
+  array([[1., 0., 0., ..., 0., 0., 0.],
+       [0., 1., 0., ..., 0., 0., 0.],
+       [0., 0., 1., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 1., 0., 0.],
+       [0., 0., 0., ..., 0., 1., 0.],
+       [0., 0., 0., ..., 0., 0., 1.]])
+  ```
+  Berdasarkan _output_ diatas, proses perhitungan `cosine_similarity` telah berhasil dilakukan.
+
+- Membuat DataFrame dari matriks kesamaan
+  ```python
+  cosine_sim_df = pd.DataFrame(
+    cosine_sim,                      
+    index=df['urlDrugName'],         
+    columns=df['urlDrugName'])
+
+  print('Ukuran Dataframe : ', cosine_sim_df.shape)
+  ```
+  Dengan _output_
+  ```
+  Ukuran Dataframe :  (1198, 1198)
+  ```
+  Berdasarkan output diatas, proses pembuatan dataframe berhasil dengan nama `cosine_sim_df` dilakukan dan dataframe memiliki ukuran 1198 x 1198
+
+- Membangun Fungsi Utama rekomendasi obat berbasis Content-Based Filtering
+  ```python
+  def drug_recommendations(drug_name, n=5):
+    global cosine_sim_df
+    cosine_sim_df = cosine_sim_df[~cosine_sim_df.index.duplicated(keep='first')]
+    cosine_sim_df = cosine_sim_df.loc[:, ~cosine_sim_df.columns.duplicated(keep='first')]
     
+    if drug_name not in cosine_sim_df.index:
+        raise ValueError(f"Drug name '{drug_name}' not found in similarity matrix.")
+        
+    sim_scores = cosine_sim_df.loc[drug_name].sort_values(ascending=False)
+    sim_scores = sim_scores.drop(drug_name, errors='ignore')
+    top_recommendations = sim_scores.head(n * 2).index.tolist()
+    
+    recommendations_df = (
+        df[df['urlDrugName'].isin(top_recommendations)][['urlDrugName', 'condition']]
+        .drop_duplicates(subset=['urlDrugName'])
+        .head(n)
+    )
+    return recommendations_df
+  ```
+  Berikut diatas merupakan _function_ yang diguunakan untuk dilakukannya rekomendasi obat berbasis Content-Based Filtering
+
+  
+
+
+
+
+  
+
+
+
+
+
+
   
 
 
