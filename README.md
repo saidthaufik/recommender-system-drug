@@ -336,7 +336,7 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
   Berikut adalah grafik 10 teratas distribusi `condition` terlihat bahwa **despression** dan **acne** menjadi yang paling mencolok dari distribusi lainnya
 
   **Rekomendasi:**
-  Melakukan _filter_ kondisi medis kurang dari 10, alasannya akan dijelaskan pada proses **Data Preparation**
+  Melakukan _filter_ kondisi medis kurang dari 30, alasannya akan dijelaskan pada proses **Data Preparation**
 
 # Data Preparation
 
