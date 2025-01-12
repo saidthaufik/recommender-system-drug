@@ -429,23 +429,22 @@ Pada proses ini, dataset difokuskan hanya pada fitur-fitur yang relevan untuk me
 df = df_filtered[['urlDrugName','condition']]
 ```
 Dengan _output_
-```
-| urlDrugName | condition      |
-|-------------|----------------|
-| prilosec    | acid reflux    |
-| propecia    | hair loss      |
-| vyvanse     | add            |
-| elavil      | depression     |
-| claritin    | allergies      |
-| ...         | ...            |
-| ambien      | insomnia       |
-| nexium      | acid reflux    |
-| retin-a     | acne           |
-| vyvanse     | adhd           |
-| proair-hfa  | asthma         |
 
-1198 rows × 2 columns
-```
+| urlDrugName  | condition      |
+|--------------|----------------|
+| prilosec     | acid reflux    |
+| propecia     | hair loss      |
+| vyvanse      | add            |
+| elavil       | depression     |
+| claritin     | allergies      |
+| ...          | ...            |
+| ambien       | insomnia       |
+| nexium       | acid reflux    |
+| retin-a      | acne           |
+| vyvanse      | adhd           |
+| proair-hfa   | asthma         |
+
+_1198 rows × 2 columns_
 
 Sekarang variabel `df` hanya berisikan fitur :
 - `urlDrugName`
@@ -582,6 +581,128 @@ Pendekatan ini menggunakan atribut-atribut atau fitur-fitur item untuk menentuka
     return recommendations_df
   ```
   Berikut diatas merupakan _function_ yang diguunakan untuk dilakukannya rekomendasi obat berbasis Content-Based Filtering
+
+### Result
+Pada proses hasil ini akan dicoba rekomendasi obat yang lain `lexapro` yang merupakan obat antidepresan 
+
+```python
+recommendations_result = drug_recommendations('lexapro')
+recommendations_result
+```
+Dengan _output_
+
+| urlDrugName     | condition      |
+|------------------|----------------|
+| wellbutrin-xl   | depression     |
+| wellbutrin-sr   | depression     |
+| zoloft          | depression     |
+| paxil           | depression     |
+| citalopram      | depression     |
+
+Berikut ini adalah hasil `Top-N Recommendation` yang merupakan rekomendasi obat menggunakan Content-Based Filtering. 
+
+Berdasarkan percobaan diatas, jika input yang diberikan adalah obat dengan nama `'lexapro'`, model menghasilkan rekomendasi obat-obat lain seperti `wellbutrin-xl`, `wellbutrin-sr`, `zoloft`, `paxil`, dan `citalopram`, yang semuanya memiliki kondisi `depression`. 
+
+Hasil ini menunjukkan bahwa metode ini dapat membantu menemukan alternatif obat yang sesuai untuk kondisi yang sama, sehingga mempermudah pengguna dalam memilih obat yang relevan.
+
+# Evaluation
+
+Untuk mengukur bagaimana performa dari model yang telah dibuat, diperlukan metrik evaluasi untuk mengevaluasi model _Recommender Content-Based System_ berbasis obat. Adapun metrik evaluasi yang digunakan adalah **Precision**, dengan penjelasan formula, konteks, dan cara kerjanya terhadap model sebagai berikut:
+
+- Penjelasan Formula dan Konteks Terhadap Proyek
+
+  **Precision** adalah metrik yang digunakan untuk mengevaluasi relevansi hasil rekomendasi model. **Precision** mengukur proporsi rekomendasi yang relevan (benar) dibandingkan dengan jumlah total rekomendasi yang diberikan. Metrik ini sangat penting untuk memastikan bahwa model memberikan rekomendasi yang tepat sasaran dan berguna bagi pengguna.
+  
+  Formula untuk menghitung **Precision** adalah sebagai berikut:
+
+  $$\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}$$
+  
+  **Keterangan:**
+  - **True Positive (TP):** Jumlah rekomendasi yang relevan dan benar 
+  - **False Positive (FP):** Jumlah rekomendasi yang tidak relevan atau salah 
+  
+  Dalam konteks _Recommender System_, formula tersebut dapat disesuaikan menjadi:
+
+  $$\text{Precision} = \frac{\text{Jumlah Rekomendasi Relevan}}{\text{Jumlah Total Rekomendasi}}$$
+  
+  **Keterangan:**
+  - **Jumlah Rekomendasi Relevan:** Rekomendasi obat yang sesuai dengan kondisi medis (_condition_) dari pasien.
+  - **Jumlah Total Rekomendasi:** Seluruh obat yang direkomendasikan oleh model berdasarkan _input_ obat awal.
+
+- Cara Kerja
+
+  Formula tersebut mengukur **Precision** dalam konteks sistem rekomendasi obat. **Precision** dihitung dengan membagi jumlah rekomendasi yang relevan dengan jumlah total item yang direkomendasikan.
+  
+  Jika model merekomendasikan 10 obat dan 7 di antaranya relevan dengan kondisi pasien, maka nilai **Precision** adalah:
+
+  $$\text{Precision} = \frac{7}{10} = 0.7 \, \text{atau} \, 70%\.$$
+  
+  Ini menunjukkan bahwa 70% dari rekomendasi yang diberikan oleh model relevan dan bermanfaat bagi pasien.
+
+- Implementasi
+  - Fungsi untuk menghitung Precision
+    ```python
+    def calculate_precision(drug_name, condition, top_n=5):
+    recommended_drugs = drug_recommendations(drug_name, n=top_n)
+    return (
+        len(recommended_drugs[recommended_drugs['condition'] == condition]) / len(recommended_drugs)
+        if len(recommended_drugs) > 0 else 0 )
+    ```
+    Berikut diatas adalah fungsi `calculate_precision` dari **Precision** untuk kasus ini
+
+  - Menghitung Precision untuk setiap kombinasi `urlDrugName` dan `condition`
+    ```python
+    precision_results_df = (df.groupby('condition').first()[['urlDrugName']].reset_index())
+
+    precision_results_df['precision'] = precision_results_df.apply(
+    lambda row: calculate_precision(row['urlDrugName'], row['condition'], top_n=5), axis=1)
+
+    precision_results_df = precision_results_df.sort_values(by='precision', ascending=False)
+    overall_precision = precision_results_df['precision'].mean()
+    ```
+    Berikut diatas adalah proses menghitung precision untuk setiap kombinasi `drug_name` dan `condition` sehingga mengghasilkan variabel `precision_result_df` sebagai hasil dan variabel `overall_precision` sebagai rerata precision
+
+  - Mencetak hasil Precision dan _overall_ nya
+    ```python
+    print(precision_results_df)
+    print(f"Overall Precision: {overall_precision:}")
+    ```
+    Dengan _output_
+    ```
+                  condition       urlDrugName  precision
+    0           acid reflux          prilosec        1.0
+    1                  acne            sotret        1.0
+    2                   add           vyvanse        1.0
+    4             allergies          claritin        1.0
+    5               anxiety        effexor-xr        1.0
+    6                asthma         singulair        1.0
+    7         birth control  ortho-tri-cyclen        1.0
+    8            depression            elavil        1.0
+    10  high blood pressure            lotrel        1.0
+    13             insomnia            ambien        1.0
+    15            migraines           prempro        1.0
+    12       hypothyroidism         synthroid        0.8
+    9             hair loss          propecia        0.6
+    11     high cholesterol           crestor        0.6
+    14             migraine             zomig        0.6
+    3                  adhd           vyvanse        0.0
+    Overall Precision: 0.85
+    ```
+    
+Berdasarkan hasil _output_ diatas, berikut adalah hasil **precision** yang dihasil model untuk setiap `condition` adalah sebagai berikut:
+
+1. **Precision Tertinggi**: Sebanyak 11 kondisi, seperti `acid reflux`, `acne`, `add`, dan lainnya, memiliki **precision** sebesar **1.0**, menunjukkan bahwa semua rekomendasi obat untuk kondisi tersebut sangat relevan.
+2. **Precision Menengah**: Kondisi seperti `hypothyroidism`, `hair loss`, `high cholesterol`, dan `migraine` memiliki **precision** **0.6 hingga 0.8**, menunjukkan rekomendasi cukup relevan, tetapi tidak sepenuhnya akurat.
+3. **Precision Terendah**: Kondisi `adhd` memiliki **precision** **0.0**, menunjukkan bahwa rekomendasi obat untuk kondisi ini tidak relevan sama sekali.
+
+Rata-rata **precision** untuk seluruh kondisi adalah **0.85**
+
+  
+
+
+
+
+
 
   
 
