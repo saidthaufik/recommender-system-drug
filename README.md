@@ -635,7 +635,7 @@ Untuk mengukur bagaimana performa dari model yang telah dibuat, diperlukan metri
   
   Jika model merekomendasikan 10 obat dan 7 di antaranya relevan dengan kondisi pasien, maka nilai **Precision** adalah:
 
-  $$\text{Precision} = \frac{7}{10} = 0.7 \, \text{atau} \, 70%\.$$
+  $$\text{Precision} = \frac{7}{10} = 0.7 \, \text{atau} \, 70\%.$$
   
   Ini menunjukkan bahwa 70% dari rekomendasi yang diberikan oleh model relevan dan bermanfaat bagi pasien.
 
@@ -696,32 +696,6 @@ Berdasarkan hasil _output_ diatas, berikut adalah hasil **precision** yang dihas
 3. **Precision Terendah**: Kondisi `adhd` memiliki **precision** **0.0**, menunjukkan bahwa rekomendasi obat untuk kondisi ini tidak relevan sama sekali.
 
 Rata-rata **precision** untuk seluruh kondisi adalah **0.85**
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-
-  
-
-  
 
 # Referensi
 [1]	R. D. Zaafira and Y. Yardi, “Analysis of the Effectiveness of Drug Management Systems in Tangerang Selatan General Hospital in 2021,” J. Farm. Galen. (Galenika J. Pharmacy), vol. 10, no. 1, pp. 62–72, Mar. 2024, doi: 10.22487/j24428744.2024.v10.i1.16479.
