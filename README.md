@@ -18,14 +18,14 @@ Pendekatan permodelan yang pernah dilakukan dalam konteks serupa mencakup pengga
 Manajemen stok obat yang tidak optimal sering kali menyebabkan ketidaktersediaan obat utama yang dibutuhkan oleh pasien, sehingga mengganggu proses pengobatan dan menurunkan kepuasan pasien. Untuk mengatasi masalah ini, sistem rekomendasi berbasis _Content-Based Filtering_ dapat digunakan untuk memberikan alternatif obat yang relevan berdasarkan kesamaan karakteristik obat dengan kondisi medis pasien. Dengan menganalisis atribut seperti kondisi medis yang diobati, sistem ini membantu apotek dan profesional kesehatan memastikan pasien mendapatkan pengobatan yang optimal, bahkan ketika stok obat utama tidak tersedia. Hal ini tidak hanya meningkatkan efisiensi pelayanan tetapi juga memberikan pengalaman yang lebih baik bagi pasien.
 
 ## Problem Statements
-1. Bagaimana mengetahui dan memahami karakteristik _dataset_  dalam pembuatan model _Recommender Content-Based System_ Berbasis Obat
-2. Bagaimana membuat model _Recommender System_ dengan pendekatan _content-based filtering_?
+1. Bagaimana mengetahui dan memahami karakteristik _dataset_ dalam pembuatan model _Recommender Content-Based System_ Berbasis Obat
+2. Bagaimana membuat model _Recommender System_ dengan pendekatan _Content-Based Filtering_?
 3. Bagaimana cara mengukur performa (evaluasi) model _Recommender Content-Based System_ Berbasis Obat yang sudah dibangun?
 
 ## Goals
-1. Melakukan proses _Exploratory Data Analysis_ (EDA) dan Data Visualization untuk memahami karakteristik data
-2. Merancang dan Membangun model _Recommender System_ dengan pendekatan _content-based filtering_
-3. Melakukan evaluasi terhadap model _Recommender System_ _content-based filtering_
+1. Melakukan proses _Exploratory Data Analysis_ (EDA) dan _Data Visualization_ untuk memahami karakteristik data
+2. Merancang dan Membangun model _Recommender System_ dengan pendekatan _Content-Based Filtering_
+3. Melakukan evaluasi terhadap model _Recommender System_ _Content-Based Filtering_
 
 # Data Understanding 
 Dataset yang digunakan untuk pembuatan model sistem rekomendasi ini adalah dataset "Drug Review Dataset (Drugs.com)" yang tersedia di situs [UCI Machine Learning Repository](https://doi.org/10.24432/C55G6J). Dataset ini berisi ulasan pasien terkait obat-obatan tertentu beserta kondisi medis yang relevan.
