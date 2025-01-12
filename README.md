@@ -458,7 +458,7 @@ Dengan jumlah data **1198 baris dengan 2 kolom**
 
 **Kelebihan:**
 - Tidak memerlukan data dari pengguna lain, sehingga cocok untuk personalisasi.
-- Efektif dalam menangani cold start untuk pengguna baru.
+- Efektif dalam menangani _cold start_ untuk pengguna baru.
 - Rekomendasi dapat dijelaskan dengan mudah karena berbasis pada fitur yang relevan.
 
 ***Kekurangan:***
