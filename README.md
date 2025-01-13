@@ -51,292 +51,292 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
 - **`sideEffectsReview`**: Ulasan mengenai efek samping obat dari pengguna.
 - **`commentsReview`**: Komentar tambahan mengenai pengalaman pengguna dengan obat.
 
-## Exploratory Data Analysis
-**Exploratory Data Analysis (EDA)** adalah proses eksplorasi dan analisis awal terhadap data untuk memahami struktur, pola, dan karakteristiknya sebelum dilakukan pemodelan lebih lanjut. EDA bertujuan untuk mengidentifikasi distribusi data, mendeteksi nilai yang hilang atau pencilan, serta menganalisis hubungan antar variabel.
+- Exploratory Data Analysis
+  **Exploratory Data Analysis (EDA)** adalah proses eksplorasi dan analisis awal terhadap data untuk memahami struktur, pola, dan karakteristiknya sebelum dilakukan pemodelan lebih lanjut. EDA bertujuan untuk mengidentifikasi distribusi data, mendeteksi nilai yang hilang atau pencilan, serta menganalisis hubungan antar variabel.
 
-- Menampilan jumlah baris dan kolom yang ada pada dataset
-  ``` python
-  df.shape
-  ```
-  Dengan _output_:
-  ```
-  (4143, 9)
-  ```
-  Berdasarkan _output_ diatas, `df` memiliki:
-  - 4143 baris data
-  - 9 kolom data
+  - Menampilan jumlah baris dan kolom yang ada pada dataset
+    ``` python
+    df.shape
+    ```
+    Dengan _output_:
+    ```
+    (4143, 9)
+    ```
+    Berdasarkan _output_ diatas, `df` memiliki:
+    - 4143 baris data
+    - 9 kolom data
+    
+    Untuk selanjutnya kita akan melihat lebih jauh setiap kolom, cek data kosong dan tipe datanya
   
-  Untuk selanjutnya kita akan melihat lebih jauh setiap kolom, cek data kosong dan tipe datanya
-
-- Menampilkan kolom, tipe data, cek data kosong dari setiap kolom yang ada
-  ``` python
-  df.info()
-  ```
-  Dengan _output_:
-  ```
-  <class 'pandas.core.frame.DataFrame'>
-  Int64Index: 4143 entries, 0 to 1035
-  Data columns (total 9 columns):
-   #   Column             Non-Null Count  Dtype 
-  ---  ------             --------------  ----- 
-   0   Unnamed: 0         4143 non-null   int64 
-   1   urlDrugName        4143 non-null   object
-   2   rating             4143 non-null   int64 
-   3   effectiveness      4143 non-null   object
-   4   sideEffects        4143 non-null   object
-   5   condition          4142 non-null   object
-   6   benefitsReview     4143 non-null   object
-   7   sideEffectsReview  4141 non-null   object
-   8   commentsReview     4135 non-null   object
-  dtypes: int64(2), object(7)
-  memory usage: 323.7+ KB
-  ```
-  Berdasarkan _output_ diatas, `df` memiliki 9 kolom pada dataset ini diantaranya memiliki tipe datanya masing-masing, yaitu:
-  - `Unnamed:0` : `int64`
-  - `urlDrugName` : `object`
-  - `rating` : `int64`
-  - `effectiveness` : `object`
-  - `sideEffects` : `object`
-  - `condition` : `object`
-  - `benefitsReview` : `object`
-  - `sideEffectsReview` : `object`
-  - `commentsReview` : `object`
-
-  _Insight_:
-  - Masih terdapat data yang **`Non-Null Count`nya tidak merata** alias terdapat data yang `NaN`, hal ini akan ditangani pada Proses **Data Preparation**
-  - Untuk kolom `rating` yang memiliki tipe data `int64` akan dilakukan analisis lebih lanjut yakni dengan fungsi `describe()`, untuk kolom `Unnamed:0` / `reviewID` diabaikan karena hanya bersifat `index` saja
-  - Untuk kolom lain seperti `effectiveness`, `sideEffects`, `condition`, `benefitsReview`, `sideEffectsReview`, dan `commentsReview` yang memiliki tipe data `object` akan dilakukan analisis lebih lanjut yakni fungsi `nunique()`
-
-- Menampilkan deskripsi statistik kolom `rating`
-  ``` python
-  df['rating'].describe()
-  ```
-  Dengan _output_
-  ```
-  count    4143.000000
-  mean        6.946416
-  std         2.948868
-  min         1.000000
-  25%         5.000000
-  50%         8.000000
-  75%         9.000000
-  max        10.000000
-  Name: rating, dtype: float64
-  ```
-  Fungsi di atas menyediakan informasi statistik deskriptif untuk kolom `review`, meliputi:
-
-  - **`count`**: Jumlah total data dalam kolom.
-  - **`mean`**: Nilai rata-rata dari data dalam kolom.
-  - **`std`**: Standar deviasi dari data dalam kolom.
-  - **`min`**: Nilai terkecil dalam kolom.
-  - **`25%`**: Kuartil pertama (Q1), yaitu nilai yang memisahkan 25% data terendah.
-  - **`50%`**: Kuartil kedua (Q2) atau median, yaitu nilai tengah dari data.
-  - **`75%`**: Kuartil ketiga (Q3), yaitu nilai yang memisahkan 25% data tertinggi.
-  - **`max`**: Nilai terbesar dalam kolom.
+  - Menampilkan kolom, tipe data, cek data kosong dari setiap kolom yang ada
+    ``` python
+    df.info()
+    ```
+    Dengan _output_:
+    ```
+    <class 'pandas.core.frame.DataFrame'>
+    Int64Index: 4143 entries, 0 to 1035
+    Data columns (total 9 columns):
+     #   Column             Non-Null Count  Dtype 
+    ---  ------             --------------  ----- 
+     0   Unnamed: 0         4143 non-null   int64 
+     1   urlDrugName        4143 non-null   object
+     2   rating             4143 non-null   int64 
+     3   effectiveness      4143 non-null   object
+     4   sideEffects        4143 non-null   object
+     5   condition          4142 non-null   object
+     6   benefitsReview     4143 non-null   object
+     7   sideEffectsReview  4141 non-null   object
+     8   commentsReview     4135 non-null   object
+    dtypes: int64(2), object(7)
+    memory usage: 323.7+ KB
+    ```
+    Berdasarkan _output_ diatas, `df` memiliki 9 kolom pada dataset ini diantaranya memiliki tipe datanya masing-masing, yaitu:
+    - `Unnamed:0` : `int64`
+    - `urlDrugName` : `object`
+    - `rating` : `int64`
+    - `effectiveness` : `object`
+    - `sideEffects` : `object`
+    - `condition` : `object`
+    - `benefitsReview` : `object`
+    - `sideEffectsReview` : `object`
+    - `commentsReview` : `object`
   
-  Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data secara visual
+    _Insight_:
+    - Masih terdapat data yang **`Non-Null Count`nya tidak merata** alias terdapat data yang `NaN`, hal ini akan ditangani pada Proses **Data Preparation**
+    - Untuk kolom `rating` yang memiliki tipe data `int64` akan dilakukan analisis lebih lanjut yakni dengan fungsi `describe()`, untuk kolom `Unnamed:0` / `reviewID` diabaikan karena hanya bersifat `index` saja
+    - Untuk kolom lain seperti `effectiveness`, `sideEffects`, `condition`, `benefitsReview`, `sideEffectsReview`, dan `commentsReview` yang memiliki tipe data `object` akan dilakukan analisis lebih lanjut yakni fungsi `nunique()`
+  
+  - Menampilkan deskripsi statistik kolom `rating`
+    ``` python
+    df['rating'].describe()
+    ```
+    Dengan _output_
+    ```
+    count    4143.000000
+    mean        6.946416
+    std         2.948868
+    min         1.000000
+    25%         5.000000
+    50%         8.000000
+    75%         9.000000
+    max        10.000000
+    Name: rating, dtype: float64
+    ```
+    Fungsi di atas menyediakan informasi statistik deskriptif untuk kolom `review`, meliputi:
+  
+    - **`count`**: Jumlah total data dalam kolom.
+    - **`mean`**: Nilai rata-rata dari data dalam kolom.
+    - **`std`**: Standar deviasi dari data dalam kolom.
+    - **`min`**: Nilai terkecil dalam kolom.
+    - **`25%`**: Kuartil pertama (Q1), yaitu nilai yang memisahkan 25% data terendah.
+    - **`50%`**: Kuartil kedua (Q2) atau median, yaitu nilai tengah dari data.
+    - **`75%`**: Kuartil ketiga (Q3), yaitu nilai yang memisahkan 25% data tertinggi.
+    - **`max`**: Nilai terbesar dalam kolom.
+    
+    Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data secara visual
+  
+  - Menampilkann total unique value di kolom `Unnamed:0` / ReviewID
+    ``` python
+    print(df['Unnamed: 0'].nunique())
+    ```
+    Dengan _output_
+    ```
+    4143
+    ```
+    Berdasarkan output diatas nilai fungsi `nunique()` dari kolom `Unnamed:0` atau `ReviewID` adalah sebanyak **4143 data unik**, sehingga pada proses **Data Preparation**, kolom ini akan dihapus karena hanya bersifat `index` saja
+  
+  - Menampilkann total unique value di kolom `urlDrugName`
+    ``` python
+    print(df['urlDrugName'].nunique())
+    ```
+    Dengan _output_
+    ```
+    541
+    ```
+    Berdasarkan _output_ diatas nilai `nunique()` dari kolom `urlDrugName` adalah sebanyak **541 data unik** terkait dengan obat. Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data
+  
+  - Menampilkann total unique value di kolom `effectiveness`
+    ``` python
+    print(df['effectiveness'].nunique())
+    ```
+    Dengan _output_
+    ```
+    5
+    ```
+    Berdasarkan _output_ diatas nilai `nunique()` dari kolom `effectiveness` adalah sebanyak **5 data unik**. Ini sudah merepresentasikan `effectiveness` yang digunakan pada _dataset_ ini dengan skala dengan 5 level.
+  
+  - Menampilkann total unique value di kolom `sideEffects`
+    ``` python
+    print(df['sideEffects'].nunique())
+    ```
+    Dengan _output_
+    ```
+    5
+    ```
+    Berdasarkan output diatas nilai `nunique()` dari kolom `sideEffects` adalah sebanyak **5 data unik**. Ini sudah merepresentasikan `sideEffects` yang digunakan pada dataset ini dengan skala dengan 5 level. Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data
+  
+  - Menampilkann total unique value di kolom `condition`
+    ``` python
+    print(df['condition'].nunique())
+    ```
+    Dengan _output_
+    ```
+    1807
+    ```
+    Berdasarkan _output_ diatas nilai `nunique()` dari kolom `condition` adalah sebanyak **1807 data unik**. Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data.
+  
+  - Menampilkann total unique value di kolom `benefitsReview`
+    ``` python
+    print(df['benefitsReview'].nunique())
+    ```
+    Dengan _output_
+    ```
+    4028
+    ```
+    Berdasarkan _output_ diatas nilai `nunique()` dari kolom `benefitsReview` adalah sebanyak **4028 data unik** atau hampir keseluruhan data merupakan data unik.
+  
+    ```python
+    df['benefitsReview']
+    ```
+    Dengan _output_
+    ```
+    0       slowed the progression of left ventricular dys...
+    1       Although this type of birth control has more c...
+    2       I was used to having cramps so badly that they...
+    3       The acid reflux went away for a few months aft...
+    4       I think that the Lyrica was starting to help w...
+                                  ...                        
+    1031    Detoxing effect by pushing out the system thro...
+    1032    The albuterol relieved the constriction, irrit...
+    1033                      Serve Acne has turned to middle
+    1034    My overall mood, sense of well being, energy l...
+    1035    Up until 2 years ago, it worked really well on...
+    Name: benefitsReview, Length: 4143, dtype: object
+    ```
+    Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `benefitsReview` adalah berbentuk _Review_ atau _Natural Language_ , sehingga pada proses **Data Preparation** kolom ini tidak digunakan
+  
+  - Menampilkann total unique value di kolom `sideEffectsReview`
+    ```python
+    print(df['sideEffectsReview'].nunique())
+    ```
+    Dengan _output_
+    ```
+    3746
+    ```
+    Berdasarkan output diatas nilai `nunique()` dari kolom `sideEffectsReview` adalah sebanyak **3746 data unik** atau hampir keseluruhan data merupakan data unik.
+  
+    ```python
+    df['sideEffectsReview']
+    ```
+    Dengan _output_
+    ```
+    0       cough, hypotension , proteinuria, impotence , ...
+    1       Heavy Cycle, Cramps, Hot Flashes, Fatigue, Lon...
+    2              Heavier bleeding and clotting than normal.
+    3       Constipation, dry mouth and some mild dizzines...
+    4       I felt extremely drugged and dopey.  Could not...
+                                  ...                        
+    1031    Hairloss, extreme dry skin, itchiness, raises ...
+    1032                  I have experienced no side effects.
+    1033      Painfull muscles, problems with seeing at night
+    1034    No side effects of any kind were noted or appa...
+    1035    Have stopped using it and have also learned th...
+    Name: sideEffectsReview, Length: 4143, dtype: object
+    ```
+    Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `sideEffectsReview` adalah berbentuk _Review_ atau _Natural Language_ , sehingga pada proses **Data Preparation** kolom ini tidak digunakan
+  
+  - Menampilkann total unique value di kolom `commentsReview`
+    ``` python
+    print(df['commentsReview'].nunique())
+    ```
+    Dengan _output_
+    ```
+    4056
+    ```
+    Berdasarkan output diatas nilai `nunique()` dari kolom `commentsReview` adalah sebanyak **4056 data unik** atau hampir keseluruhan data merupakan data unik.
+  
+    ```python
+    df['commentsReview']
+    ```
+    Dengan _output_
+    ```
+    0       monitor blood pressure , weight and asses for ...
+    1       I Hate This Birth Control, I Would Not Suggest...
+    2       I took 2 pills at the onset of my menstrual cr...
+    3       I was given Prilosec prescription at a dose of...
+    4                                               See above
+                                  ...                        
+    1031    Treatment period is 3 months/12 weeks. Dosage ...
+    1032    I use the albuterol as needed because of aller...
+    1033    This drug is highly teratogenic ,females must ...
+    1034    Divigel is a topically applied Bio-Identical H...
+    1035                 Stopped using it for the time being.
+    Name: commentsReview, Length: 4143, dtype: object
+    ```
+  
+    Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `commentsReview` adalah berbentuk _Review_ atau _Natural Language_ , sehingga pada proses **Data Preparation** kolom ini tidak digunakan
+  
+  - Pengecekan data duplikat pada dataframe `df`
+    ```python
+    df.duplicated().sum()
+    ```
+    Dengan _output_
+    ```
+    0
+    ```
+    Berdasarkan _output_ diatas bahwa tidak terdapat data yang duplikat terhadap dataset `df`
 
-- Menampilkann total unique value di kolom `Unnamed:0` / ReviewID
-  ``` python
-  print(df['Unnamed: 0'].nunique())
-  ```
-  Dengan _output_
-  ```
-  4143
-  ```
-  Berdasarkan output diatas nilai fungsi `nunique()` dari kolom `Unnamed:0` atau `ReviewID` adalah sebanyak **4143 data unik**, sehingga pada proses **Data Preparation**, kolom ini akan dihapus karena hanya bersifat `index` saja
+  - Data Visualization
+    **Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan kita untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
 
-- Menampilkann total unique value di kolom `urlDrugName`
-  ``` python
-  print(df['urlDrugName'].nunique())
-  ```
-  Dengan _output_
-  ```
-  541
-  ```
-  Berdasarkan _output_ diatas nilai `nunique()` dari kolom `urlDrugName` adalah sebanyak **541 data unik** terkait dengan obat. Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data
-
-- Menampilkann total unique value di kolom `effectiveness`
-  ``` python
-  print(df['effectiveness'].nunique())
-  ```
-  Dengan _output_
-  ```
-  5
-  ```
-  Berdasarkan _output_ diatas nilai `nunique()` dari kolom `effectiveness` adalah sebanyak **5 data unik**. Ini sudah merepresentasikan `effectiveness` yang digunakan pada _dataset_ ini dengan skala dengan 5 level.
-
-- Menampilkann total unique value di kolom `sideEffects`
-  ``` python
-  print(df['sideEffects'].nunique())
-  ```
-  Dengan _output_
-  ```
-  5
-  ```
-  Berdasarkan output diatas nilai `nunique()` dari kolom `sideEffects` adalah sebanyak **5 data unik**. Ini sudah merepresentasikan `sideEffects` yang digunakan pada dataset ini dengan skala dengan 5 level. Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data
-
-- Menampilkann total unique value di kolom `condition`
-  ``` python
-  print(df['condition'].nunique())
-  ```
-  Dengan _output_
-  ```
-  1807
-  ```
-  Berdasarkan _output_ diatas nilai `nunique()` dari kolom `condition` adalah sebanyak **1807 data unik**. Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data.
-
-- Menampilkann total unique value di kolom `benefitsReview`
-  ``` python
-  print(df['benefitsReview'].nunique())
-  ```
-  Dengan _output_
-  ```
-  4028
-  ```
-  Berdasarkan _output_ diatas nilai `nunique()` dari kolom `benefitsReview` adalah sebanyak **4028 data unik** atau hampir keseluruhan data merupakan data unik.
-
-  ```python
-  df['benefitsReview']
-  ```
-  Dengan _output_
-  ```
-  0       slowed the progression of left ventricular dys...
-  1       Although this type of birth control has more c...
-  2       I was used to having cramps so badly that they...
-  3       The acid reflux went away for a few months aft...
-  4       I think that the Lyrica was starting to help w...
-                                ...                        
-  1031    Detoxing effect by pushing out the system thro...
-  1032    The albuterol relieved the constriction, irrit...
-  1033                      Serve Acne has turned to middle
-  1034    My overall mood, sense of well being, energy l...
-  1035    Up until 2 years ago, it worked really well on...
-  Name: benefitsReview, Length: 4143, dtype: object
-  ```
-  Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `benefitsReview` adalah berbentuk _Review_ atau _Natural Language_ , sehingga pada proses **Data Preparation** kolom ini tidak digunakan
-
-- Menampilkann total unique value di kolom `sideEffectsReview`
-  ```python
-  print(df['sideEffectsReview'].nunique())
-  ```
-  Dengan _output_
-  ```
-  3746
-  ```
-  Berdasarkan output diatas nilai `nunique()` dari kolom `sideEffectsReview` adalah sebanyak **3746 data unik** atau hampir keseluruhan data merupakan data unik.
-
-  ```python
-  df['sideEffectsReview']
-  ```
-  Dengan _output_
-  ```
-  0       cough, hypotension , proteinuria, impotence , ...
-  1       Heavy Cycle, Cramps, Hot Flashes, Fatigue, Lon...
-  2              Heavier bleeding and clotting than normal.
-  3       Constipation, dry mouth and some mild dizzines...
-  4       I felt extremely drugged and dopey.  Could not...
-                                ...                        
-  1031    Hairloss, extreme dry skin, itchiness, raises ...
-  1032                  I have experienced no side effects.
-  1033      Painfull muscles, problems with seeing at night
-  1034    No side effects of any kind were noted or appa...
-  1035    Have stopped using it and have also learned th...
-  Name: sideEffectsReview, Length: 4143, dtype: object
-  ```
-  Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `sideEffectsReview` adalah berbentuk _Review_ atau _Natural Language_ , sehingga pada proses **Data Preparation** kolom ini tidak digunakan
-
-- Menampilkann total unique value di kolom `commentsReview`
-  ``` python
-  print(df['commentsReview'].nunique())
-  ```
-  Dengan _output_
-  ```
-  4056
-  ```
-  Berdasarkan output diatas nilai `nunique()` dari kolom `commentsReview` adalah sebanyak **4056 data unik** atau hampir keseluruhan data merupakan data unik.
-
-  ```python
-  df['commentsReview']
-  ```
-  Dengan _output_
-  ```
-  0       monitor blood pressure , weight and asses for ...
-  1       I Hate This Birth Control, I Would Not Suggest...
-  2       I took 2 pills at the onset of my menstrual cr...
-  3       I was given Prilosec prescription at a dose of...
-  4                                               See above
-                                ...                        
-  1031    Treatment period is 3 months/12 weeks. Dosage ...
-  1032    I use the albuterol as needed because of aller...
-  1033    This drug is highly teratogenic ,females must ...
-  1034    Divigel is a topically applied Bio-Identical H...
-  1035                 Stopped using it for the time being.
-  Name: commentsReview, Length: 4143, dtype: object
-  ```
-
-  Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `commentsReview` adalah berbentuk _Review_ atau _Natural Language_ , sehingga pada proses **Data Preparation** kolom ini tidak digunakan
-
-- Pengecekan data duplikat pada dataframe `df`
-  ```python
-  df.duplicated().sum()
-  ```
-  Dengan _output_
-  ```
-  0
-  ```
-  Berdasarkan _output_ diatas bahwa tidak terdapat data yang duplikat terhadap dataset `df`
-
-## Data Visualization
-**Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan kita untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
-
-- Melihat Distribusi 30 `urlDrugName` Teratas
-  <div align="center">
-  <img src="https://github.com/user-attachments/assets/e612913b-ed71-4961-82fc-5b8c75bf5ba1" alt="Distribusi 30 Obat Teratas" width="500"/>
-  <br>
-  <b>Gambar 1. Distribusi 30 Obat Teratas</b>
-  </div>
-
-  Berdasarkan grafik diatas bahwa persebaran data pada `urlDrugName` cukup merata sehingga tetap dipertahankan untuk analisis berikutnya
-
-- Melihat Distribusi `rating`
-  <div align="center">
-  <img src="https://github.com/user-attachments/assets/ef8b272d-bc5b-4c74-be4e-5d1d881d0cbd" alt="Distribusi Rating" width="500"/>
-  <br>
-  <b>Gambar 2. Distribusi Rating</b>
-  </div>
-
-  Berdasarkan grafik diatas bahwa distribusi `rating` yang **terbesar adalah 10 dengan data 968**, sedangkan `rating` yang **terkecil adalah 2 dengan data 136**
-
-- Melihat Distribusi `effectiveness`
-  <div align="center">
-  <img src="https://github.com/user-attachments/assets/16b0d3f2-43ec-4be6-89b0-98ec446f7399" alt="Distribusi Efektifitas Obat" width="500"/>
-  <br>
-  <b>Gambar 3. Distribusi Efektifitas Obat</b>
-  </div>
-
-  Berdasarkan grafik diatas bahwa distribusi `effectiveness` yang **terbesar adalah Highly Effective dengan data 1741**, sedangkan `effectiveness` yang **terkecil adalah Marginally Effective dengan 263 data**
-
-- Melihat Distribusi `sideEffects`
-  <div align="center">
-  <img src="https://github.com/user-attachments/assets/61b1711c-1042-4655-8cf8-c273411790d7" alt="Distribusi Efek Samping Obat" width="500"/>
-  <br>
-  <b>Gambar 4. Distribusi Efek Samping Obat</b>
-  </div>
-
-  Berdasarkan grafik diatas bahwa distribusi `sideEffects` yang **terbesar adalah Mid Side Effects dengan data 1349**, sedangkan `sideEffects` yang **terkecil adalah Extremely Severe Side Effects dengan 255 data**
-
-- Melihat Distribusi `condition`
-  <div align="center">
-  <img src="https://github.com/user-attachments/assets/68e34c37-e706-4dfb-b7ef-04f9aaa5ee41" alt="Distribusi Kondisi Medis" width="500"/>
-  <br>
-  <b>Gambar 5. Distribusi Kondisi Medis</b>
-  </div>
-
-  Berikut adalah grafik 10 teratas distribusi `condition` terlihat bahwa **despression** dan **acne** menjadi yang paling mencolok dari distribusi lainnya
-
-  **Rekomendasi:**
-  Melakukan _filter_ kondisi medis kurang dari 30, alasannya akan dijelaskan pada proses **Data Preparation**
+    - Melihat Distribusi 30 `urlDrugName` Teratas
+      <div align="center">
+      <img src="https://github.com/user-attachments/assets/e612913b-ed71-4961-82fc-5b8c75bf5ba1" alt="Distribusi 30 Obat Teratas" width="500"/>
+      <br>
+      <b>Gambar 1. Distribusi 30 Obat Teratas</b>
+      </div>
+    
+      Berdasarkan grafik diatas bahwa persebaran data pada `urlDrugName` cukup merata sehingga tetap dipertahankan untuk analisis berikutnya
+    
+    - Melihat Distribusi `rating`
+      <div align="center">
+      <img src="https://github.com/user-attachments/assets/ef8b272d-bc5b-4c74-be4e-5d1d881d0cbd" alt="Distribusi Rating" width="500"/>
+      <br>
+      <b>Gambar 2. Distribusi Rating</b>
+      </div>
+    
+      Berdasarkan grafik diatas bahwa distribusi `rating` yang **terbesar adalah 10 dengan data 968**, sedangkan `rating` yang **terkecil adalah 2 dengan data 136**
+    
+    - Melihat Distribusi `effectiveness`
+      <div align="center">
+      <img src="https://github.com/user-attachments/assets/16b0d3f2-43ec-4be6-89b0-98ec446f7399" alt="Distribusi Efektifitas Obat" width="500"/>
+      <br>
+      <b>Gambar 3. Distribusi Efektifitas Obat</b>
+      </div>
+    
+      Berdasarkan grafik diatas bahwa distribusi `effectiveness` yang **terbesar adalah Highly Effective dengan data 1741**, sedangkan `effectiveness` yang **terkecil adalah Marginally Effective dengan 263 data**
+    
+    - Melihat Distribusi `sideEffects`
+      <div align="center">
+      <img src="https://github.com/user-attachments/assets/61b1711c-1042-4655-8cf8-c273411790d7" alt="Distribusi Efek Samping Obat" width="500"/>
+      <br>
+      <b>Gambar 4. Distribusi Efek Samping Obat</b>
+      </div>
+    
+      Berdasarkan grafik diatas bahwa distribusi `sideEffects` yang **terbesar adalah Mid Side Effects dengan data 1349**, sedangkan `sideEffects` yang **terkecil adalah Extremely Severe Side Effects dengan 255 data**
+    
+    - Melihat Distribusi `condition`
+      <div align="center">
+      <img src="https://github.com/user-attachments/assets/68e34c37-e706-4dfb-b7ef-04f9aaa5ee41" alt="Distribusi Kondisi Medis" width="500"/>
+      <br>
+      <b>Gambar 5. Distribusi Kondisi Medis</b>
+      </div>
+    
+      Berikut adalah grafik 10 teratas distribusi `condition` terlihat bahwa **despression** dan **acne** menjadi yang paling mencolok dari distribusi lainnya
+    
+      **Rekomendasi:**
+      Melakukan _filter_ kondisi medis kurang dari 30, alasannya akan dijelaskan pada proses **Data Preparation**
 
 # Data Preparation
 
