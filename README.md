@@ -584,6 +584,7 @@ Pendekatan ini menggunakan atribut-atribut atau fitur-fitur item untuk menentuka
     Berikut diatas merupakan _function_ yang diguunakan untuk dilakukannya rekomendasi obat berbasis Content-Based Filtering
 
 - **Result**
+  
   Pada proses hasil ini akan dicoba rekomendasi obat yang lain `lexapro` yang merupakan obat antidepresan 
   
   ```python
