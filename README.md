@@ -41,15 +41,15 @@ Dataset tersebut dapat diunduh di [sini](https://doi.org/10.24432/C55G6J).
 Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
 
 **Atribut pada Dataset:**
-   - **`Unnamed:0`** / **ReviewID** : Data Unik Review dari pengguna
-   - **`urlDrugName`**: Nama obat yang diulas.
-   - **`rating`**: Skor penilaian yang diberikan pengguna (skala 1–10).
-   - **`effectiveness`**: Efektivitas obat berdasarkan pengalaman pengguna.
-   - **`sideEffects`**: Efek samping yang dirasakan pengguna.
-   - **`condition`**: Kondisi medis yang diatasi oleh obat.
-   - **`benefitsReview`**: Ulasan mengenai manfaat obat dari pengguna.
-   - **`sideEffectsReview`**: Ulasan mengenai efek samping obat dari pengguna.
-   - **`commentsReview`**: Komentar tambahan mengenai pengalaman pengguna dengan obat.
+1. **`Unnamed:0`** / **ReviewID** : Data Unik Review dari pengguna
+2. **`urlDrugName`**: Nama obat yang diulas.
+3. **`rating`**: Skor penilaian yang diberikan pengguna (skala 1–10).
+4. **`effectiveness`**: Efektivitas obat berdasarkan pengalaman pengguna.
+5. **`sideEffects`**: Efek samping yang dirasakan pengguna.
+6. **`condition`**: Kondisi medis yang diatasi oleh obat.
+7. **`benefitsReview`**: Ulasan mengenai manfaat obat dari pengguna.
+8. **`sideEffectsReview`**: Ulasan mengenai efek samping obat dari pengguna.
+9. **`commentsReview`**: Komentar tambahan mengenai pengalaman pengguna dengan obat.
 
 - **Exploratory Data Analysis**
   
