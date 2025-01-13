@@ -585,7 +585,18 @@ Pendekatan ini menggunakan atribut-atribut atau fitur-fitur item untuk menentuka
 
 - **Result**
   
-  Pada proses hasil ini akan dicoba rekomendasi obat yang lain `lexapro` yang merupakan obat antidepresan 
+  Pada proses hasil ini akan dicoba rekomendasi obat yang lain `lexapro` yang merupakan obat antidepresan:
+
+  ```python
+   df[df['urlDrugName'].eq('lexapro')].head(1)
+  ```
+  Dengan _output_
+  
+  | urlDrugName | condition   |
+  |-------------|-------------|
+  | lexapro     | depression  |
+
+  Kemudian memanggil fungsi `drug_recommendations()` untuk mendapatkan hasil `Top-N Recommendation`
   
   ```python
   recommendations_result = drug_recommendations('lexapro')
