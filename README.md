@@ -41,17 +41,18 @@ Dataset tersebut dapat diunduh di [sini](https://doi.org/10.24432/C55G6J).
 Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
 
 **Atribut pada Dataset:**
-- **`Unnamed:0`** / **ReviewID** : Data Unik Review dari pengguna
-- **`urlDrugName`**: Nama obat yang diulas.
-- **`rating`**: Skor penilaian yang diberikan pengguna (skala 1–10).
-- **`effectiveness`**: Efektivitas obat berdasarkan pengalaman pengguna.
-- **`sideEffects`**: Efek samping yang dirasakan pengguna.
-- **`condition`**: Kondisi medis yang diatasi oleh obat.
-- **`benefitsReview`**: Ulasan mengenai manfaat obat dari pengguna.
-- **`sideEffectsReview`**: Ulasan mengenai efek samping obat dari pengguna.
-- **`commentsReview`**: Komentar tambahan mengenai pengalaman pengguna dengan obat.
+   - **`Unnamed:0`** / **ReviewID** : Data Unik Review dari pengguna
+   - **`urlDrugName`**: Nama obat yang diulas.
+   - **`rating`**: Skor penilaian yang diberikan pengguna (skala 1–10).
+   - **`effectiveness`**: Efektivitas obat berdasarkan pengalaman pengguna.
+   - **`sideEffects`**: Efek samping yang dirasakan pengguna.
+   - **`condition`**: Kondisi medis yang diatasi oleh obat.
+   - **`benefitsReview`**: Ulasan mengenai manfaat obat dari pengguna.
+   - **`sideEffectsReview`**: Ulasan mengenai efek samping obat dari pengguna.
+   - **`commentsReview`**: Komentar tambahan mengenai pengalaman pengguna dengan obat.
 
-- Exploratory Data Analysis
+- **Exploratory Data Analysis**
+  
   **Exploratory Data Analysis (EDA)** adalah proses eksplorasi dan analisis awal terhadap data untuk memahami struktur, pola, dan karakteristiknya sebelum dilakukan pemodelan lebih lanjut. EDA bertujuan untuk mengidentifikasi distribusi data, mendeteksi nilai yang hilang atau pencilan, serta menganalisis hubungan antar variabel.
 
   - Menampilan jumlah baris dan kolom yang ada pada dataset
@@ -287,7 +288,8 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
     ```
     Berdasarkan _output_ diatas bahwa tidak terdapat data yang duplikat terhadap dataset `df`
 
-  - Data Visualization
+  - **Data Visualization**
+    
     **Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan kita untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
 
     - Melihat Distribusi 30 `urlDrugName` Teratas
