@@ -611,7 +611,7 @@ Pendekatan ini menggunakan atribut-atribut atau fitur-fitur item untuk menentuka
 
 Untuk mengukur bagaimana performa dari model yang telah dibuat, diperlukan metrik evaluasi untuk mengevaluasi model _Recommender Content-Based System_ berbasis obat. Adapun metrik evaluasi yang digunakan adalah **Precision**, dengan penjelasan formula, konteks, dan cara kerjanya terhadap model sebagai berikut:
 
-- Penjelasan Formula dan Konteks Terhadap Proyek
+- **Penjelasan Formula dan Konteks Terhadap Proyek**
 
   **Precision** adalah metrik yang digunakan untuk mengevaluasi relevansi hasil rekomendasi model. **Precision** mengukur proporsi rekomendasi yang relevan (benar) dibandingkan dengan jumlah total rekomendasi yang diberikan. Metrik ini sangat penting untuk memastikan bahwa model memberikan rekomendasi yang tepat sasaran dan berguna bagi pengguna.
   
@@ -628,20 +628,20 @@ Untuk mengukur bagaimana performa dari model yang telah dibuat, diperlukan metri
   $$\text{Precision} = \frac{\text{Jumlah Rekomendasi Relevan}}{\text{Jumlah Total Rekomendasi}}$$
   
   **Keterangan:**
-  - **Jumlah Rekomendasi Relevan:** Rekomendasi obat yang sesuai dengan kondisi medis (_condition_) dari pasien.
+  - **Jumlah Rekomendasi Relevan:** Rekomendasi obat yang sesuai dengan kondisi medis (_condition_).
   - **Jumlah Total Rekomendasi:** Seluruh obat yang direkomendasikan oleh model berdasarkan _input_ obat awal.
 
-- Cara Kerja
+- **Cara Kerja**
 
   Formula tersebut mengukur **Precision** dalam konteks sistem rekomendasi obat. **Precision** dihitung dengan membagi jumlah rekomendasi yang relevan dengan jumlah total item yang direkomendasikan.
   
-  Jika model merekomendasikan 10 obat dan 7 di antaranya relevan dengan kondisi pasien, maka nilai **Precision** adalah:
+  Jika model merekomendasikan 10 obat dan 7 di antaranya relevan dengan kondisi medis, maka nilai **Precision** adalah:
 
   $$\text{Precision} = \frac{7}{10} = 0.7 \, \text{atau} \, 70\%.$$
   
   Ini menunjukkan bahwa 70% dari rekomendasi yang diberikan oleh model relevan dan bermanfaat bagi pasien.
 
-- Implementasi
+- **Implementasi**
   - Fungsi untuk menghitung Precision
     ```python
     def calculate_precision(drug_name, condition, top_n=5):
