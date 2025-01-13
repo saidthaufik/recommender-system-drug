@@ -455,8 +455,7 @@ Sekarang variabel `df` hanya berisikan fitur :
 Dengan jumlah data **1198 baris dengan 2 kolom**
 
 # Modelling dan Result
-## Content-Based Filtering
-**Content-Based Filtering** adalah pendekatan dalam sistem rekomendasi yang menggunakan atribut-atribut atau fitur-fitur dari item untuk menentukan kesamaan antara item yang ada. Pendekatan ini berfokus pada karakteristik item yang telah dinilai pengguna untuk merekomendasikan item serupa.
+Pada proses ini akan dilakukan permodelan sistem rekomendasi dan menerapkan model tersebut. Adapun pendekatan Sistem Rekomendasi yang digunakan adalah**Content-Based Filtering** adalah pendekatan dalam sistem rekomendasi yang menggunakan atribut-atribut atau fitur-fitur dari item untuk menentukan kesamaan antara item yang ada. Pendekatan ini berfokus pada karakteristik item yang telah dinilai pengguna untuk merekomendasikan item serupa.
 
 **Kelebihan:**
 - Tidak memerlukan data dari pengguna lain, sehingga cocok untuk personalisasi.
@@ -470,142 +469,142 @@ Dengan jumlah data **1198 baris dengan 2 kolom**
 
 Pendekatan ini menggunakan atribut-atribut atau fitur-fitur item untuk menentukan kesamaan antara item yang ada. Dalam konteks proyek ini, content-based filtering akan memberikan rekomendasi obat (_drug_) berdasarkan **condition** dari dataset yang tersedia.
 
-### Modelling
+- **Modelling**
 
-- Penggabungan Fitur dan Membuat matriks TF-IDF
+  - Penggabungan Fitur dan Membuat matriks TF-IDF
+    ```python
+    tf_id = TfidfVectorizer(stop_words='english')
+    tf_id.fit(df['condition'])
+    tf_id.get_feature_names_out()
+    ```
+    Dengan _output_
+    ```
+    array(['acid', 'acne', 'add', 'adhd', 'allergies', 'anxiety', 'asthma',
+         'birth', 'blood', 'cholesterol', 'control', 'depression', 'hair',
+         'high', 'hypothyroidism', 'insomnia', 'loss', 'migraine',
+         'migraines', 'pressure', 'reflux'], dtype=object)
+    ```
+    Berdasarkan _output_ diatas menghasilkan _array_ yang berisi nilai-nilai yang ada pada kolom `condition`
+  
+  - Melihat ukuran matrix tfidf
+    ```python
+    tfidf_matrix = tf_id.fit_transform(df['condition'])
+    tfidf_matrix.shape
+    ```
+    Dengan _output_
+    ```
+    (1198, 21)
+    ```
+    Berdasarkan _output_ diatas menampilkan **ukuran data 1198 baris x 21 kolom**, sehingga akan masuk tahap pembuatan matrix agar bisa dianalisa lebih lanjut
+  
+  - Mengubah vektor tf-idf yang berbentuk matriks menggunakan fungsi `todense()`
+    ```python
+    tfidf_matrix.todense()
+    ```
+    Dengan _output_
+    ```
+    matrix([[0.70710678, 0.        , 0.        , ..., 0.        , 0.        ,
+           0.70710678],
+          [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+           0.        ],
+          [0.        , 0.        , 1.        , ..., 0.        , 0.        ,
+           0.        ],
+          ...,
+          [0.        , 1.        , 0.        , ..., 0.        , 0.        ,
+           0.        ],
+          [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+           0.        ],
+          [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+           0.        ]])
+    ```
+    Berdasarkan _output_ diatas berhasil menerapkan fungsi `todense()` untuk membentuk matrix
+  
+  - Membuat DataFrame untuk melihat TF-IDF matrix
+    ```python
+    tfidf_df = pd.DataFrame(
+      tfidf_matrix.todense(),                    
+      columns=tf_id.get_feature_names_out(),  
+      index=df['urlDrugName'])
+    ```
+    Berhasil membuat Dataframe `tfidf_df`
+  
+  - Proses perhitungan `cosine_similarity()`
+    ```python
+    cosine_sim = cosine_similarity(tfidf_matrix)
+    cosine_sim
+    ```
+    Dengan _output_
+    ```
+    array([[1., 0., 0., ..., 0., 0., 0.],
+         [0., 1., 0., ..., 0., 0., 0.],
+         [0., 0., 1., ..., 0., 0., 0.],
+         ...,
+         [0., 0., 0., ..., 1., 0., 0.],
+         [0., 0., 0., ..., 0., 1., 0.],
+         [0., 0., 0., ..., 0., 0., 1.]])
+    ```
+    Berdasarkan _output_ diatas, proses perhitungan `cosine_similarity` telah berhasil dilakukan.
+  
+  - Membuat DataFrame dari matriks kesamaan
+    ```python
+    cosine_sim_df = pd.DataFrame(
+      cosine_sim,                      
+      index=df['urlDrugName'],         
+      columns=df['urlDrugName'])
+  
+    print('Ukuran Dataframe : ', cosine_sim_df.shape)
+    ```
+    Dengan _output_
+    ```
+    Ukuran Dataframe :  (1198, 1198)
+    ```
+    Berdasarkan output diatas, proses pembuatan dataframe berhasil dengan nama `cosine_sim_df` dilakukan dan dataframe memiliki ukuran 1198 x 1198
+  
+  - Membangun Fungsi Utama rekomendasi obat berbasis Content-Based Filtering
+    ```python
+    def drug_recommendations(drug_name, n=5):
+      global cosine_sim_df
+      cosine_sim_df = cosine_sim_df[~cosine_sim_df.index.duplicated(keep='first')]
+      cosine_sim_df = cosine_sim_df.loc[:, ~cosine_sim_df.columns.duplicated(keep='first')]
+      
+      if drug_name not in cosine_sim_df.index:
+          raise ValueError(f"Drug name '{drug_name}' not found in similarity matrix.")
+          
+      sim_scores = cosine_sim_df.loc[drug_name].sort_values(ascending=False)
+      sim_scores = sim_scores.drop(drug_name, errors='ignore')
+      top_recommendations = sim_scores.head(n * 2).index.tolist()
+      
+      recommendations_df = (
+          df[df['urlDrugName'].isin(top_recommendations)][['urlDrugName', 'condition']]
+          .drop_duplicates(subset=['urlDrugName'])
+          .head(n)
+      )
+      return recommendations_df
+    ```
+    Berikut diatas merupakan _function_ yang diguunakan untuk dilakukannya rekomendasi obat berbasis Content-Based Filtering
+
+- **Result**
+  Pada proses hasil ini akan dicoba rekomendasi obat yang lain `lexapro` yang merupakan obat antidepresan 
+  
   ```python
-  tf_id = TfidfVectorizer(stop_words='english')
-  tf_id.fit(df['condition'])
-  tf_id.get_feature_names_out()
+  recommendations_result = drug_recommendations('lexapro')
+  recommendations_result
   ```
   Dengan _output_
-  ```
-  array(['acid', 'acne', 'add', 'adhd', 'allergies', 'anxiety', 'asthma',
-       'birth', 'blood', 'cholesterol', 'control', 'depression', 'hair',
-       'high', 'hypothyroidism', 'insomnia', 'loss', 'migraine',
-       'migraines', 'pressure', 'reflux'], dtype=object)
-  ```
-  Berdasarkan _output_ diatas menghasilkan _array_ yang berisi nilai-nilai yang ada pada kolom `condition`
-
-- Melihat ukuran matrix tfidf
-  ```python
-  tfidf_matrix = tf_id.fit_transform(df['condition'])
-  tfidf_matrix.shape
-  ```
-  Dengan _output_
-  ```
-  (1198, 21)
-  ```
-  Berdasarkan _output_ diatas menampilkan **ukuran data 1198 baris x 21 kolom**, sehingga akan masuk tahap pembuatan matrix agar bisa dianalisa lebih lanjut
-
-- Mengubah vektor tf-idf yang berbentuk matriks menggunakan fungsi `todense()`
-  ```python
-  tfidf_matrix.todense()
-  ```
-  Dengan _output_
-  ```
-  matrix([[0.70710678, 0.        , 0.        , ..., 0.        , 0.        ,
-         0.70710678],
-        [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
-         0.        ],
-        [0.        , 0.        , 1.        , ..., 0.        , 0.        ,
-         0.        ],
-        ...,
-        [0.        , 1.        , 0.        , ..., 0.        , 0.        ,
-         0.        ],
-        [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
-         0.        ],
-        [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
-         0.        ]])
-  ```
-  Berdasarkan _output_ diatas berhasil menerapkan fungsi `todense()` untuk membentuk matrix
-
-- Membuat DataFrame untuk melihat TF-IDF matrix
-  ```python
-  tfidf_df = pd.DataFrame(
-    tfidf_matrix.todense(),                    
-    columns=tf_id.get_feature_names_out(),  
-    index=df['urlDrugName'])
-  ```
-  Berhasil membuat Dataframe `tfidf_df`
-
-- Proses perhitungan `cosine_similarity()`
-  ```python
-  cosine_sim = cosine_similarity(tfidf_matrix)
-  cosine_sim
-  ```
-  Dengan _output_
-  ```
-  array([[1., 0., 0., ..., 0., 0., 0.],
-       [0., 1., 0., ..., 0., 0., 0.],
-       [0., 0., 1., ..., 0., 0., 0.],
-       ...,
-       [0., 0., 0., ..., 1., 0., 0.],
-       [0., 0., 0., ..., 0., 1., 0.],
-       [0., 0., 0., ..., 0., 0., 1.]])
-  ```
-  Berdasarkan _output_ diatas, proses perhitungan `cosine_similarity` telah berhasil dilakukan.
-
-- Membuat DataFrame dari matriks kesamaan
-  ```python
-  cosine_sim_df = pd.DataFrame(
-    cosine_sim,                      
-    index=df['urlDrugName'],         
-    columns=df['urlDrugName'])
-
-  print('Ukuran Dataframe : ', cosine_sim_df.shape)
-  ```
-  Dengan _output_
-  ```
-  Ukuran Dataframe :  (1198, 1198)
-  ```
-  Berdasarkan output diatas, proses pembuatan dataframe berhasil dengan nama `cosine_sim_df` dilakukan dan dataframe memiliki ukuran 1198 x 1198
-
-- Membangun Fungsi Utama rekomendasi obat berbasis Content-Based Filtering
-  ```python
-  def drug_recommendations(drug_name, n=5):
-    global cosine_sim_df
-    cosine_sim_df = cosine_sim_df[~cosine_sim_df.index.duplicated(keep='first')]
-    cosine_sim_df = cosine_sim_df.loc[:, ~cosine_sim_df.columns.duplicated(keep='first')]
-    
-    if drug_name not in cosine_sim_df.index:
-        raise ValueError(f"Drug name '{drug_name}' not found in similarity matrix.")
-        
-    sim_scores = cosine_sim_df.loc[drug_name].sort_values(ascending=False)
-    sim_scores = sim_scores.drop(drug_name, errors='ignore')
-    top_recommendations = sim_scores.head(n * 2).index.tolist()
-    
-    recommendations_df = (
-        df[df['urlDrugName'].isin(top_recommendations)][['urlDrugName', 'condition']]
-        .drop_duplicates(subset=['urlDrugName'])
-        .head(n)
-    )
-    return recommendations_df
-  ```
-  Berikut diatas merupakan _function_ yang diguunakan untuk dilakukannya rekomendasi obat berbasis Content-Based Filtering
-
-### Result
-Pada proses hasil ini akan dicoba rekomendasi obat yang lain `lexapro` yang merupakan obat antidepresan 
-
-```python
-recommendations_result = drug_recommendations('lexapro')
-recommendations_result
-```
-Dengan _output_
-
-| urlDrugName     | condition      |
-|------------------|----------------|
-| wellbutrin-xl   | depression     |
-| wellbutrin-sr   | depression     |
-| zoloft          | depression     |
-| paxil           | depression     |
-| citalopram      | depression     |
-
-Berikut ini adalah hasil `Top-N Recommendation` yang merupakan rekomendasi obat menggunakan Content-Based Filtering. 
-
-Berdasarkan percobaan diatas, jika input yang diberikan adalah obat dengan nama `'lexapro'`, model menghasilkan rekomendasi obat-obat lain seperti `wellbutrin-xl`, `wellbutrin-sr`, `zoloft`, `paxil`, dan `citalopram`, yang semuanya memiliki kondisi `depression`. 
-
-Hasil ini menunjukkan bahwa metode ini dapat membantu menemukan alternatif obat yang sesuai untuk kondisi yang sama, sehingga mempermudah pengguna dalam memilih obat yang relevan.
+  
+  | urlDrugName     | condition      |
+  |------------------|----------------|
+  | wellbutrin-xl   | depression     |
+  | wellbutrin-sr   | depression     |
+  | zoloft          | depression     |
+  | paxil           | depression     |
+  | citalopram      | depression     |
+  
+  Berikut ini adalah hasil `Top-N Recommendation` yang merupakan rekomendasi obat menggunakan Content-Based Filtering. 
+  
+  Berdasarkan percobaan diatas, jika input yang diberikan adalah obat dengan nama `'lexapro'`, model menghasilkan rekomendasi obat-obat lain seperti `wellbutrin-xl`, `wellbutrin-sr`, `zoloft`, `paxil`, dan `citalopram`, yang semuanya memiliki kondisi `depression`. 
+  
+  Hasil ini menunjukkan bahwa metode ini dapat membantu menemukan alternatif obat yang sesuai untuk kondisi yang sama, sehingga mempermudah pengguna dalam memilih obat yang relevan.
 
 # Evaluation
 
