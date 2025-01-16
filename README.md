@@ -60,7 +60,7 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
   
   **Exploratory Data Analysis (EDA)** adalah proses eksplorasi dan analisis awal terhadap data untuk memahami struktur, pola, dan karakteristiknya sebelum dilakukan pemodelan lebih lanjut. EDA bertujuan untuk mengidentifikasi distribusi data, mendeteksi nilai yang hilang atau pencilan, serta menganalisis hubungan antar variabel.
   
-  - **Dataset `df_a`
+  - **Dataset `df_a`**
 
     - Menampilan jumlah baris dan kolom yang ada pada dataset
       ``` python
