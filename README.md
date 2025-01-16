@@ -623,20 +623,16 @@ Dataset ini dilakukan penggabungan karena memiliki karakteristik yang sama dan k
 ```python
 df = pd.concat([df_a, df_b])
 ```
+Kemudian dilakukan pengecekan `shape` dari varibel `df`
+```python
+df.shape
+```
+
 Dengan _output_
-| Unnamed: 0 | urlDrugName        | rating | effectiveness         | sideEffects         | condition                       | benefitsReview                                                                                  | sideEffectsReview                                                                     | commentsReview                                                   |
-|------------|--------------------|--------|-----------------------|---------------------|---------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|------------------------------------------------------------------|
-| 0          | enalapril          | 4      | Highly Effective      | Mild Side Effects   | management of congestive heart failure | slowed the progression of left ventricular dysfunction                                          | cough, hypotension, proteinuria, impotence                                           | monitor blood pressure, weight, and assess for other complications |
-| 1          | ortho-tri-cyclen  | 1      | Highly Effective      | Severe Side Effects | birth prevention               | Although this type of birth control has more convenient dosage...                              | Heavy Cycle, Cramps, Hot Flashes, Fatigue, Loneliness                                 | I Hate This Birth Control, I Would Not Suggest It                                  |
-| 2          | ponstel            | 10     | Highly Effective      | No Side Effects     | menstrual cramps               | I was used to having cramps so badly that they...                                              | Heavier bleeding and clotting than normal                                             | I took 2 pills at the onset of my menstrual cramps                                   |
-| 3          | prilosec           | 3      | Marginally Effective  | Mild Side Effects   | acid reflux                    | The acid reflux went away for a few months after...                                             | Constipation, dry mouth and some mild dizziness                                       | I was given Prilosec prescription at a dose of...                                    |
-| 4          | lyrica             | 2      | Marginally Effective  | Severe Side Effects | fibromyalgia                   | I think that the Lyrica was starting to help with...                                            | I felt extremely drugged and dopey. Could not focus                                   | See above                                                           |
-| ...        | ...                | ...    | ...                   | ...                 | ...                             | ...                                                                                              | ...                                                                                   | ...                                                              |
-| 1031       | accutane           | 7      | Considerably Effective| Severe Side Effects | acne vulgaris                  | Detoxing effect by pushing out the system through...                                            | Hairloss, extreme dry skin, itchiness, raises cholesterol...                          | Treatment period is 3 months/12 weeks. Dosage...                                    |
-| 1032       | proair-hfa         | 10     | Highly Effective      | No Side Effects     | asthma                         | The albuterol relieved the constriction, irritation...                                          | I have experienced no side effects.                                                  | I use the albuterol as needed because of allergies                                   |
-| 1033       | accutane           | 8      | Considerably Effective| Moderate Side Effects| severe acne                   | Severe Acne has turned to middle                                                               | Painful muscles, problems with seeing at night                                       | This drug is highly teratogenic, females must...                                    |
-| 1034       | divigel            | 10     | Highly Effective      | No Side Effects     | menopause                      | My overall mood, sense of well being, energy levels...                                          | No side effects of any kind were noted or apparent                                    | Divigel is a topically applied Bio-Identical Hormone                                 |
-| 1035       | claripel-cream     | 8      | Considerably Effective| Mild Side Effects   | acne scarring & hyperpigmentation | Up until 2 years ago, it worked really well on...                                              | Have stopped using it and have also learned that...                                   | Stopped using it for the time being.                                                |
+```
+(1198, 2)
+```
+Berhasil menggabungkan data `df_a` dan `df_b` menjadi variabel `df` dengan menggunakan fungsi `concat()` dengan jumlah baris adalah 4143 dan jumlah kolom adalah 9 
 
 ## Handling Data Duplikat
 Pada proses ini, langkah yang dilakukan adalah memeriksa dan menghapus data duplikat dari dataset untuk memastikan kualitas data yang baik sebelum masuk ke tahap pemodelan. Proses ini penting untuk menghindari data yang terulang yang dapat mempengaruhi hasil analisis dan performa model rekomendasi.
