@@ -70,7 +70,7 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
       ```
       (3107, 9)
       ```
-      Berdasarkan _output_ diatas, `df` memiliki:
+      Berdasarkan _output_ diatas, `df_a` memiliki:
       - 3107 baris data
       - 9 kolom data
     
