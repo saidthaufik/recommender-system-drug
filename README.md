@@ -826,7 +826,7 @@ Pendekatan yang digunakan dalam membangun _Recommender System_ adalah **Content-
 
 Dalam konteks proyek ini, **Content-Based Filtering** akan memberikan rekomendasi obat (_drug_) berdasarkan **condition** dari dataset yang tersedia. Adapun algoritme yang digunakan adalah **Cosine Similarity**. 
 
-**Cosine Similarity** adalah ukuran kesamaan antara dua vektor dalam ruang multidimensi, yang dihitung berdasarkan sudut kosinus antara keduanya. Dalam konteks sistem rekomendasi, vektor mewakili item atau pengguna berdasarkan fitur mereka. Nilai Cosine Similarity berkisar antara 0 hingga 1, di mana nilai 1 menunjukkan kesamaan sempurna dan nilai mendekati 0 menunjukkan perbedaan yang signifikan.
+**Cosine Similarity** adalah ukuran kesamaan antara dua vektor dalam ruang multidimensi, yang dihitung berdasarkan sudut kosinus antara keduanya. Dalam konteks sistem rekomendasi, vektor mewakili item atau pengguna berdasarkan fiturnya. Nilai Cosine Similarity berkisar antara 0 hingga 1, di mana nilai 1 menunjukkan kesamaan sempurna dan nilai mendekati 0 menunjukkan perbedaan yang signifikan.
 
 Rumus Cosine Similarity:
 
