@@ -815,35 +815,36 @@ Ekstraksi fitur dengan TF-IDF dipilih karena metode ini dapat memberikan bobot l
 Pendekatan yang digunakan dalam membangun _Recommender System_ adalah **Content-Based Filtering**. **Content-Based Filtering** adalah pendekatan dalam sistem rekomendasi yang menggunakan atribut-atribut atau fitur-fitur dari item untuk menentukan kesamaan antara item yang ada. Pendekatan ini berfokus pada karakteristik item yang telah dinilai pengguna untuk merekomendasikan item serupa.
 
 **Kelebihan:**
-- Tidak memerlukan data dari pengguna lain, sehingga cocok untuk personalisasi.
-- Efektif dalam menangani _cold start_ untuk pengguna baru.
-- Rekomendasi dapat dijelaskan dengan mudah karena berbasis pada fitur yang relevan.
+  - Tidak memerlukan data dari pengguna lain, sehingga cocok untuk personalisasi.
+  - Efektif dalam menangani _cold start_ untuk pengguna baru.
+  - Rekomendasi dapat dijelaskan dengan mudah karena berbasis pada fitur yang relevan.
 
 **Kekurangan:**
-- Cenderung menghasilkan rekomendasi yang terlalu spesifik dan tidak bervariasi (_overspecialization_).
-- Bergantung pada ketersediaan dan kualitas fitur/atribut item.
-- Tidak dapat merekomendasikan item yang berbeda dari sejarah preferensi pengguna (tidak ada eksplorasi).
+  - Cenderung menghasilkan rekomendasi yang terlalu spesifik dan tidak bervariasi (_overspecialization_).
+  - Bergantung pada ketersediaan dan kualitas fitur/atribut item.
+  - Tidak dapat merekomendasikan item yang berbeda dari sejarah preferensi pengguna (tidak ada eksplorasi).
 
 Dalam konteks proyek ini, **Content-Based Filtering** akan memberikan rekomendasi obat (_drug_) berdasarkan **condition** dari dataset yang tersedia. Adapun algoritme yang digunakan adalah **Cosine Similarity**. 
 
 **Cosine Similarity** adalah ukuran kesamaan antara dua vektor dalam ruang multidimensi, yang dihitung berdasarkan sudut kosinus antara keduanya. Dalam konteks sistem rekomendasi, vektor mewakili item atau pengguna berdasarkan fitur mereka. Nilai Cosine Similarity berkisar antara 0 hingga 1, di mana nilai 1 menunjukkan kesamaan sempurna dan nilai mendekati 0 menunjukkan perbedaan yang signifikan.
 
 Rumus Cosine Similarity:
+
 $$\text{Cosine Similarity} = \frac{\sum_{i=1}^{n} A_i \cdot B_i}{\sqrt{\sum_{i=1}^{n} A_i^2} \cdot \sqrt{\sum_{i=1}^{n} B_i^2}}$$
 
 Keterangan:
-- **A** dan **B**: Vektor representasi dari dua item atau pengguna.
-- **n**: Jumlah fitur dalam vektor.
+  - **A** dan **B**: Vektor representasi dari dua item atau pengguna.
+  - **n**: Jumlah fitur dalam vektor.
 
 **Kelebihan Cosine Similarity:**
-- Mudah diterapkan dan dihitung.
-- Memberikan nilai kesamaan yang akurat untuk data dengan banyak dimensi.
-- Tidak terpengaruh oleh skala fitur karena hanya mempertimbangkan arah vektor.
+  - Mudah diterapkan dan dihitung.
+  - Memberikan nilai kesamaan yang akurat untuk data dengan banyak dimensi.
+  - Tidak terpengaruh oleh skala fitur karena hanya mempertimbangkan arah vektor.
 
 **Kekurangan Cosine Similarity:**
-- Tidak mempertimbangkan perbedaan magnitudo antara dua vektor.
-- Tidak cocok untuk data yang memiliki nilai nol yang dominan (_sparse data_).
-- Bergantung pada kualitas fitur untuk menghasilkan rekomendasi yang relevan.
+  - Tidak mempertimbangkan perbedaan magnitudo antara dua vektor.
+  - Tidak cocok untuk data yang memiliki nilai nol yang dominan (_sparse data_).
+  - Bergantung pada kualitas fitur untuk menghasilkan rekomendasi yang relevan.
 
 - **Modelling**
   - Proses perhitungan `cosine_similarity()`
