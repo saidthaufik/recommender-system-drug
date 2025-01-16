@@ -153,8 +153,8 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
       ```
       502
       ```
-      Berdasarkan _output_ diatas nilai `nunique()` dari kolom `urlDrugName` adalah sebanyak **541 data unik** terkait dengan obat. Untuk analisis lebih jauh, akan dilakukan **Data Visualization** untuk melihat persebaran data
-    
+      Berdasarkan _output_ diatas nilai `nunique()` dari kolom `urlDrugName` adalah sebanyak **541 data unik** terkait dengan obat.
+      
     - Menampilkann total unique value di kolom `effectiveness`
       ``` python
       print(df_a['effectiveness'].nunique())
