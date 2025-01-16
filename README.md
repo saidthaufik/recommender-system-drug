@@ -345,7 +345,7 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
       ```
       (1036, 9)
       ```
-      Berdasarkan _output_ diatas, `df_a` memiliki:
+      Berdasarkan _output_ diatas, `df_b` memiliki:
       - 1036 baris data
       - 9 kolom data
     
