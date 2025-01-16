@@ -630,7 +630,7 @@ df.shape
 
 Dengan _output_
 ```
-(1198, 2)
+(4143, 9)
 ```
 Berhasil menggabungkan data `df_a` dan `df_b` menjadi variabel `df` dengan menggunakan fungsi `concat()` dengan jumlah baris adalah 4143 dan jumlah kolom adalah 9 
 
