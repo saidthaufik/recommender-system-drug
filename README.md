@@ -30,7 +30,7 @@ Manajemen stok obat yang tidak optimal sering kali menyebabkan ketidaktersediaan
 ## Solution Approach
 1. Melakukan EDA untuk menganalisa karakteristik dataset hingga fiturnya dengan menggunakan fungsi `info()`,`describe()`,`nunique()`, dan `duplicate()`. Kemudian melakukan visualisasi data dengan menggunakan Histogram untuk mendapatkan pemahaman yang lebih komprehensif
 2. Membangun _Recommender System_ dengan `Content-Based Filtering` yang memberikan rekomendasi kepada pengguna berdasarkan kesamaan pada item yang ada. Data yang digunakan adalah data Obat dengan kondisi medisnya. Dataset tersebut juga melewati tahap _Data Preparation_ agar dataset dapat digunakan untuk proses pembangunan model seperti Handling Data Duplikat, _Handling Missing Value_/ Nilai `NaN`, Filter Frekuensi Data, dan Filter Fitur Penting. Kemudian, data yang sudah siap, diproses ke tahap _modelling_ yang memanfaatkan `Tfidvectorizer`, `cosine similarity`, dan fungsi buatan yang mengembalikan rekomendasi berdasarkan kesamaan pada item. Pendekatan ini berfokus pada karakteristik atau konten dari item yang direkomendasikan
-3. Melakukan perhitungan skor **Precision** untuk mengukur performa dari model _Recommender System_ Obat dengan _Content-Based Fearning_. 
+3. Melakukan perhitungan skor **Precision** untuk mengukur performa dari model _Recommender System_ Obat dengan _Content-Based Filtering_. 
 
 # Data Understanding 
 Dataset yang digunakan untuk pembuatan model sistem rekomendasi ini adalah dataset "Drug Review Dataset (Drugs.com)" yang tersedia di situs [UCI Machine Learning Repository](https://doi.org/10.24432/C55G6J). Dataset ini berisi ulasan pasien terkait obat-obatan tertentu beserta kondisi medis yang relevan.
