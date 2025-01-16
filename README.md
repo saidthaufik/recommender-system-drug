@@ -288,7 +288,7 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
 
     - **Data Visualization df_a**
     
-      **Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan kita untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
+      **Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
 
       - Melihat Distribusi 30 `urlDrugName` Teratas
         <div align="center">
@@ -563,7 +563,7 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
 
     - **Data Visualization df_b**
     
-      **Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan kita untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
+      **Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
 
       - Melihat Distribusi 30 `urlDrugName` Teratas
         <div align="center">
