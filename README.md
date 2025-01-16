@@ -746,22 +746,12 @@ Sekarang variabel `df` hanya berisikan fitur :
 
 Dengan jumlah data **1198 baris dengan 2 kolom**
 
-# Modelling dan Result
-Pada proses ini akan dilakukan permodelan sistem rekomendasi dan menerapkan model tersebut. Adapun pendekatan Sistem Rekomendasi yang digunakan adalah**Content-Based Filtering** adalah pendekatan dalam sistem rekomendasi yang menggunakan atribut-atribut atau fitur-fitur dari item untuk menentukan kesamaan antara item yang ada. Pendekatan ini berfokus pada karakteristik item yang telah dinilai pengguna untuk merekomendasikan item serupa.
+## Ekstraksi Fitur: Term Frequency-Inverse Document Frequency (TF-IDF)
 
-**Kelebihan:**
-- Tidak memerlukan data dari pengguna lain, sehingga cocok untuk personalisasi.
-- Efektif dalam menangani _cold start_ untuk pengguna baru.
-- Rekomendasi dapat dijelaskan dengan mudah karena berbasis pada fitur yang relevan.
+Pada proses ini dilakukan ekstraksi fitur menggunakan **Term Frequency-Inverse Document Frequency (TF-IDF)**. Proses ini bertujuan untuk merepresentasikan teks dalam bentuk numerik dengan cara mengukur seberapa penting suatu kata dalam sebuah dokumen dibandingkan dengan seluruh kumpulan dokumen lainnya.
 
-***Kekurangan:***
-- Cenderung menghasilkan rekomendasi yang terlalu spesifik dan tidak bervariasi (_overspecialization_).
-- Bergantung pada ketersediaan dan kualitas fitur/atribut item.
-- Tidak dapat merekomendasikan item yang berbeda dari sejarah preferensi pengguna (tidak ada eksplorasi).
-
-Pendekatan ini menggunakan atribut-atribut atau fitur-fitur item untuk menentukan kesamaan antara item yang ada. Dalam konteks proyek ini, content-based filtering akan memberikan rekomendasi obat (_drug_) berdasarkan **condition** dari dataset yang tersedia.
-
-- **Modelling**
+**Alasan:**
+Ekstraksi fitur dengan TF-IDF dipilih karena metode ini dapat memberikan bobot lebih pada kata-kata yang unik dan relevan dalam dokumen tertentu. Selain itu, TF-IDF mampu mengurangi pengaruh dari kata-kata umum yang sering muncul di berbagai dokumen, sehingga data menjadi lebih informatif dan representatif untuk analisis atau pemodelan lanjutan.
 
   - Penggabungan Fitur dan Membuat matriks TF-IDF
     ```python
@@ -820,6 +810,42 @@ Pendekatan ini menggunakan atribut-atribut atau fitur-fitur item untuk menentuka
     ```
     Berhasil membuat Dataframe `tfidf_df`
   
+# Modelling dan Result
+
+Pendekatan yang digunakan dalam membangun _Recommender System_ adalah **Content-Based Filtering**. **Content-Based Filtering** adalah pendekatan dalam sistem rekomendasi yang menggunakan atribut-atribut atau fitur-fitur dari item untuk menentukan kesamaan antara item yang ada. Pendekatan ini berfokus pada karakteristik item yang telah dinilai pengguna untuk merekomendasikan item serupa.
+
+**Kelebihan:**
+- Tidak memerlukan data dari pengguna lain, sehingga cocok untuk personalisasi.
+- Efektif dalam menangani _cold start_ untuk pengguna baru.
+- Rekomendasi dapat dijelaskan dengan mudah karena berbasis pada fitur yang relevan.
+
+**Kekurangan:**
+- Cenderung menghasilkan rekomendasi yang terlalu spesifik dan tidak bervariasi (_overspecialization_).
+- Bergantung pada ketersediaan dan kualitas fitur/atribut item.
+- Tidak dapat merekomendasikan item yang berbeda dari sejarah preferensi pengguna (tidak ada eksplorasi).
+
+Dalam konteks proyek ini, **Content-Based Filtering** akan memberikan rekomendasi obat (_drug_) berdasarkan **condition** dari dataset yang tersedia. Adapun algoritme yang digunakan adalah **Cosine Similarity**. 
+
+**Cosine Similarity** adalah ukuran kesamaan antara dua vektor dalam ruang multidimensi, yang dihitung berdasarkan sudut kosinus antara keduanya. Dalam konteks sistem rekomendasi, vektor mewakili item atau pengguna berdasarkan fitur mereka. Nilai Cosine Similarity berkisar antara 0 hingga 1, di mana nilai 1 menunjukkan kesamaan sempurna dan nilai mendekati 0 menunjukkan perbedaan yang signifikan.
+
+Rumus Cosine Similarity:
+$$\text{Cosine Similarity} = \frac{\sum_{i=1}^{n} A_i \cdot B_i}{\sqrt{\sum_{i=1}^{n} A_i^2} \cdot \sqrt{\sum_{i=1}^{n} B_i^2}}$$
+
+Keterangan:
+- **A** dan **B**: Vektor representasi dari dua item atau pengguna.
+- **n**: Jumlah fitur dalam vektor.
+
+**Kelebihan Cosine Similarity:**
+- Mudah diterapkan dan dihitung.
+- Memberikan nilai kesamaan yang akurat untuk data dengan banyak dimensi.
+- Tidak terpengaruh oleh skala fitur karena hanya mempertimbangkan arah vektor.
+
+**Kekurangan Cosine Similarity:**
+- Tidak mempertimbangkan perbedaan magnitudo antara dua vektor.
+- Tidak cocok untuk data yang memiliki nilai nol yang dominan (_sparse data_).
+- Bergantung pada kualitas fitur untuk menghasilkan rekomendasi yang relevan.
+
+- **Modelling**
   - Proses perhitungan `cosine_similarity()`
     ```python
     cosine_sim = cosine_similarity(tfidf_matrix)
