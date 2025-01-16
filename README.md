@@ -624,7 +624,6 @@ Dataset ini dilakukan penggabungan karena memiliki karakteristik yang sama dan k
 df = pd.concat([df_a, df_b])
 ```
 Dengan _output_
-```
 | Unnamed: 0 | urlDrugName        | rating | effectiveness         | sideEffects         | condition                       | benefitsReview                                                                                  | sideEffectsReview                                                                     | commentsReview                                                   |
 |------------|--------------------|--------|-----------------------|---------------------|---------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|------------------------------------------------------------------|
 | 0          | enalapril          | 4      | Highly Effective      | Mild Side Effects   | management of congestive heart failure | slowed the progression of left ventricular dysfunction                                          | cough, hypotension, proteinuria, impotence                                           | monitor blood pressure, weight, and assess for other complications |
