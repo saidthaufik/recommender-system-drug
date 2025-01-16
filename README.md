@@ -276,7 +276,7 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
     
       Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `commentsReview` adalah berbentuk _Review_ atau _Natural Language_ 
     
-    - Pengecekan data duplikat pada dataframe `df`
+    - Pengecekan data duplikat pada dataframe `df_a`
       ```python
       df_a.duplicated().sum()
       ```
@@ -334,6 +334,282 @@ Berikut adalah informasi mengenai atribut-atribut yang terdapat pada dataset:
         </div>
       
         Berikut adalah grafik 10 teratas distribusi `condition` terlihat bahwa **despression** dan **acne** menjadi yang paling mencolok dari distribusi lainnya
+
+  - **Dataset `df_b`**
+
+    - Menampilan jumlah baris dan kolom yang ada pada dataset
+      ``` python
+      df_b.shape
+      ```
+      Dengan _output_:
+      ```
+      (1036, 9)
+      ```
+      Berdasarkan _output_ diatas, `df_a` memiliki:
+      - 1036 baris data
+      - 9 kolom data
+    
+    - Menampilkan kolom, tipe data, cek data kosong dari setiap kolom yang ada
+      ``` python
+      df_b.info()
+      ```
+      Dengan _output_:
+      ```
+      <class 'pandas.core.frame.DataFrame'>
+      RangeIndex: 1036 entries, 0 to 1035
+      Data columns (total 9 columns):
+       #   Column             Non-Null Count  Dtype 
+      ---  ------             --------------  ----- 
+       0   Unnamed: 0         1036 non-null   int64 
+       1   urlDrugName        1036 non-null   object
+       2   rating             1036 non-null   int64 
+       3   effectiveness      1036 non-null   object
+       4   sideEffects        1036 non-null   object
+       5   condition          1036 non-null   object
+       6   benefitsReview     1036 non-null   object
+       7   sideEffectsReview  1036 non-null   object
+       8   commentsReview     1036 non-null   object
+      dtypes: int64(2), object(7)
+      memory usage: 73.0+ KB
+      ```
+      Berdasarkan _output_ diatas, `df_b` memiliki 9 kolom pada dataset ini diantaranya memiliki tipe datanya masing-masing, yaitu:
+      - `Unnamed:0` : `int64`
+      - `urlDrugName` : `object`
+      - `rating` : `int64`
+      - `effectiveness` : `object`
+      - `sideEffects` : `object`
+      - `condition` : `object`
+      - `benefitsReview` : `object`
+      - `sideEffectsReview` : `object`
+      - `commentsReview` : `object`
+    
+    - Menampilkan deskripsi statistik kolom `rating`
+      ``` python
+      df_b['rating'].describe()
+      ```
+      Dengan _output_
+      ```
+      count    1036.000000
+      mean        6.767375
+      std         2.976711
+      min         1.000000
+      25%         5.000000
+      50%         8.000000
+      75%         9.000000
+      max        10.000000
+      Name: rating, dtype: float64
+      ```
+      Fungsi di atas menyediakan informasi statistik deskriptif untuk kolom `review` pada variabel `df_b`, meliputi:
+    
+      - **`count`**: Jumlah total data dalam kolom.
+      - **`mean`**: Nilai rata-rata dari data dalam kolom.
+      - **`std`**: Standar deviasi dari data dalam kolom.
+      - **`min`**: Nilai terkecil dalam kolom.
+      - **`25%`**: Kuartil pertama (Q1), yaitu nilai yang memisahkan 25% data terendah.
+      - **`50%`**: Kuartil kedua (Q2) atau median, yaitu nilai tengah dari data.
+      - **`75%`**: Kuartil ketiga (Q3), yaitu nilai yang memisahkan 25% data tertinggi.
+      - **`max`**: Nilai terbesar dalam kolom.
+    
+    - Menampilkann total unique value di kolom `Unnamed:0` / ReviewID
+      ``` python
+      print(df_b['Unnamed: 0'].nunique())
+      ```
+      Dengan _output_
+      ```
+      1036
+      ```
+      Berdasarkan output diatas nilai fungsi `nunique()` dari kolom `Unnamed:0` atau `ReviewID` adalah sebanyak **1036 data unik**
+    
+    - Menampilkann total unique value di kolom `urlDrugName`
+      ``` python
+      print(df_b['urlDrugName'].nunique())
+      ```
+      Dengan _output_
+      ```
+      314
+      ```
+      Berdasarkan _output_ diatas nilai `nunique()` dari kolom `urlDrugName` adalah sebanyak **314 data unik** terkait dengan obat.
+      
+    - Menampilkann total unique value di kolom `effectiveness`
+      ``` python
+      print(df_b['effectiveness'].nunique())
+      ```
+      Dengan _output_
+      ```
+      5
+      ```
+      Berdasarkan _output_ diatas nilai `nunique()` dari kolom `effectiveness` adalah sebanyak **5 data unik**. Ini sudah merepresentasikan `effectiveness` yang digunakan pada _dataset_ ini dengan skala dengan 5 level.
+    
+    - Menampilkann total unique value di kolom `sideEffects`
+      ``` python
+      print(df_b['sideEffects'].nunique())
+      ```
+      Dengan _output_
+      ```
+      5
+      ```
+      Berdasarkan output diatas nilai `nunique()` dari kolom `sideEffects` adalah sebanyak **5 data unik**. Ini sudah merepresentasikan `sideEffects` yang digunakan pada dataset ini dengan skala dengan 5 level.
+      
+    - Menampilkann total unique value di kolom `condition`
+      ``` python
+      print(df_b['condition'].nunique())
+      ```
+      Dengan _output_
+      ```
+      566
+      ```
+      Berdasarkan _output_ diatas nilai `nunique()` dari kolom `condition` adalah sebanyak **566 data unik**.
+    
+    - Menampilkann total unique value di kolom `benefitsReview`
+      ``` python
+      print(df_b['benefitsReview'].nunique())
+      ```
+      Dengan _output_
+      ```
+      1023
+      ```
+      Berdasarkan _output_ diatas nilai `nunique()` dari kolom `benefitsReview` adalah sebanyak **1023 data unik** atau hampir keseluruhan data merupakan data unik.
+    
+      ```python
+      df_b['benefitsReview']
+      ```
+      Dengan _output_
+      ```
+      0       The antibiotic may have destroyed bacteria cau...
+      1       Lamictal stabilized my serious mood swings. On...
+      2       Initial benefits were comparable to the brand ...
+      3       It controlls my mood swings. It helps me think...
+      4       Within one week of treatment superficial acne ...
+                                    ...                        
+      1031    Detoxing effect by pushing out the system thro...
+      1032    The albuterol relieved the constriction, irrit...
+      1033                      Serve Acne has turned to middle
+      1034    My overall mood, sense of well being, energy l...
+      1035    Up until 2 years ago, it worked really well on...
+      Name: benefitsReview, Length: 1036, dtype: object
+      ```
+      Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `benefitsReview` adalah berbentuk _Review_ atau _Natural Language_
+    
+    - Menampilkann total unique value di kolom `sideEffectsReview`
+      ```python
+      print(df_b['sideEffectsReview'].nunique())
+      ```
+      Dengan _output_
+      ```
+      968
+      ```
+      Berdasarkan output diatas nilai `nunique()` dari kolom `sideEffectsReview` adalah sebanyak **968 data unik** atau hampir keseluruhan data merupakan data unik.
+    
+      ```python
+      df_b['sideEffectsReview']
+      ```
+      Dengan _output_
+      ```
+      0                           Some back pain, some nauseau.
+      1       Drowsiness, a bit of mental numbness. If you t...
+      2       Depakene has a very thin coating, which caused...
+      3                 I didnt really notice any side effects.
+      4       Side effects included moderate to severe dry s...
+                                    ...                        
+      1031    Hairloss, extreme dry skin, itchiness, raises ...
+      1032                  I have experienced no side effects.
+      1033      Painfull muscles, problems with seeing at night
+      1034    No side effects of any kind were noted or appa...
+      1035    Have stopped using it and have also learned th...
+      Name: sideEffectsReview, Length: 1036, dtype: object
+      ```
+      Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `sideEffectsReview` adalah berbentuk _Review_ atau _Natural Language_
+    
+    - Menampilkann total unique value di kolom `commentsReview`
+      ``` python
+      print(df_b['commentsReview'].nunique())
+      ```
+      Dengan _output_
+      ```
+      1030
+      ```
+      Berdasarkan output diatas nilai `nunique()` dari kolom `commentsReview` adalah sebanyak **3047 data unik** atau hampir keseluruhan data merupakan data unik.
+    
+      ```python
+      df_b['commentsReview']
+      ```
+      Dengan _output_
+      ```
+      0       Took the antibiotics for 14 days. Sinus infect...
+      1       Severe mood swings between hypomania and depre...
+      2       Depakote was prescribed to me by a Kaiser psyc...
+      3       This drug may not be for everyone but its wond...
+      4       Drug was taken in gelatin tablet at 0.5 mg per...
+                                    ...                        
+      1031    Treatment period is 3 months/12 weeks. Dosage ...
+      1032    I use the albuterol as needed because of aller...
+      1033    This drug is highly teratogenic ,females must ...
+      1034    Divigel is a topically applied Bio-Identical H...
+      1035                 Stopped using it for the time being.
+      Name: commentsReview, Length: 1036, dtype: object
+      ```
+    
+      Berdasarkan _output_ diatas bahwa karakteristik data pada kolom `commentsReview` adalah berbentuk _Review_ atau _Natural Language_ 
+    
+    - Pengecekan data duplikat pada dataframe `df_b`
+      ```python
+      df_b.duplicated().sum()
+      ```
+      Dengan _output_
+      ```
+      0
+      ```
+      Berdasarkan _output_ diatas bahwa tidak terdapat data yang duplikat terhadap dataset `df_b`
+
+    - **Data Visualization df_b**
+    
+      **Data Visualization** adalah proses penyajian data dalam bentuk grafik atau diagram untuk mempermudah interpretasi dan analisis informasi. Visualisasi data memungkinkan kita untuk mengidentifikasi pola, tren, dan hubungan antar variabel dengan lebih intuitif dibandingkan hanya melihat tabel angka mentah. 
+
+      - Melihat Distribusi 30 `urlDrugName` Teratas
+        <div align="center">
+        <img src="https://github.com/user-attachments/assets/59bc3c76-59b7-4c6e-aea0-9ea689c80069" alt="Distribusi 30 Obat Teratas df_a" width="500"/>
+        <br>
+        <b>Gambar 6. Distribusi 30 Obat Teratas Dataset df_b</b>
+        </div>
+      
+        Berdasarkan grafik diatas bahwa persebaran data pada `urlDrugName` cukup merata sehingga tetap dipertahankan untuk analisis berikutnya
+      
+      - Melihat Distribusi `rating`
+        <div align="center">
+        <img src="https://github.com/user-attachments/assets/007f90d4-8670-418a-8c49-4fd020576f09" alt="Distribusi Rating df_a" width="500"/>
+        <br>
+        <b>Gambar 7. Distribusi Rating Dataset df_b</b>
+        </div>
+      
+        Berdasarkan grafik diatas bahwa distribusi `rating` yang **terbesar adalah 10 dengan data 226**, sedangkan `rating` yang **terkecil adalah 2 dengan data 33**
+      
+      - Melihat Distribusi `effectiveness`
+        <div align="center">
+        <img src="https://github.com/user-attachments/assets/d09a6183-4b5c-4198-8152-e98ff48d2dc6" alt="Distribusi Efektifitas Obat" width="500"/>
+        <br>
+        <b>Gambar 8. Distribusi Efektifitas Obat Dataset df_b</b>
+        </div>
+      
+        Berdasarkan grafik diatas bahwa distribusi `effectiveness` yang **terbesar adalah Highly Effective dengan data 411**, sedangkan `effectiveness` yang **terkecil adalah Marginally Effective dengan 76 data**
+      
+      - Melihat Distribusi `sideEffects`
+        <div align="center">
+        <img src="https://github.com/user-attachments/assets/49178a77-d901-4139-8408-b49d2d8678bc" alt="Distribusi Efek Samping Obat" width="500"/>
+        <br>
+        <b>Gambar 9. Distribusi Efek Samping Obat Dataset df_b</b>
+        </div>
+      
+        Berdasarkan grafik diatas bahwa distribusi `sideEffects` yang **terbesar adalah Mid Side Effects dengan data 330**, sedangkan `sideEffects` yang **terkecil adalah Extremely Severe Side Effects dengan 80 data**
+              
+      - Melihat Distribusi `condition`
+        <div align="center">
+        <img src="https://github.com/user-attachments/assets/00c92145-0420-4f9b-b8c6-65f1616d8181" alt="Distribusi Kondisi Medis" width="500"/>
+        <br>
+        <b>Gambar 10. Distribusi Kondisi Medis Dataset df_b</b>
+        </div>
+      
+        Berikut adalah grafik 10 teratas distribusi `condition` terlihat bahwa **despression** dan **acne** menjadi yang paling mencolok dari distribusi lainnya
+
 
 # Data Preparation
 
