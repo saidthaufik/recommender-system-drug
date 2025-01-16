@@ -846,6 +846,8 @@ Keterangan:
   - Tidak cocok untuk data yang memiliki nilai nol yang dominan (_sparse data_).
   - Bergantung pada kualitas fitur untuk menghasilkan rekomendasi yang relevan.
 
+Berikut ini adalah implementasi _modelling_ serta _result_:
+
 - **Modelling**
   - Proses perhitungan `cosine_similarity()`
     ```python
