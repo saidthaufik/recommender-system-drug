@@ -1,12 +1,5 @@
 # Proyek Machine Learning - Model Recommender Content-Based System Berbasis Obat
 
-# Data Diri
-- Nama : Said Thaufik Rizaldi
-- Jenis Kelamin : Laki-Laki
-- Email : saidthaufik24@gmail.com
-- Kota Domisili : Bogor
-- Jalur : Educators 2024
-
 # Project Overview
 Keterbatasan obat dan manajemen stok sering menjadi tantangan bagi apotek dan fasilitas kesehatan [[1](10.22487/j24428744.2024.v10.i1.16479)]. Ketika obat utama yang diresepkan tidak tersedia, pasien harus menunggu atau mencari obat di tempat lain, yang dapat menyebabkan penundaan pengobatan dan ketidakpuasan [[2](10.20473/jaki.v7i1.2019.1-8)]. Untuk mengatasi masalah ini, sistem rekomendasi obat dapat menjadi solusi yang efektif. Sistem ini bertujuan untuk memberikan rekomendasi alternatif obat yang relevan berdasarkan kesamaan karakteristik obat dengan kondisi medis pasien [[3](10.3390/ijerph20010309)].
 
